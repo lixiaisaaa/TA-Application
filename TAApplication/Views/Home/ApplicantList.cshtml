@@ -9,24 +9,29 @@
   another source.  Any references used in the completion of the assignment are cited in my README file.
 
 
-  This html file is the Home page that shows users the basic info and best TA of the year.
+  This html file only control the Applicationlist pages elements, there are navbar linked to all other pages, a table and some text, pictures.
 -->
-@{
-    ViewData["Title"] = "Home Page";
-}
 
 <!DOCTYPE html>
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>TA application</title>
-    <link rel="stylesheet" type="text/css" href="site.css" />
-    <link rel="icon" href="Favicon.ico" type="image/x-icon">
+    <title></title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
           crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <link rel="icon" href="Favicon.ico" type="image/x-icon">
+    <link href="ApplicationList.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="site.css" />
+    <style type="text/css">
+        tr {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-window-stack" viewBox="0 0 16 16">
@@ -69,7 +74,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="ApplicationDetails.html">Application Details</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="ApplicationList.html">ApplicationList</a>
                         </li>
@@ -123,77 +127,85 @@
             </div>
         </nav>
     </header>
+    <hr>
 
+    <img class="taImage" src="TA.jpg" alt="TA application" width="500" height="300" />
 
-    <hr class="head-divider">
-
-    <main>
-        <!-- Marketing messaging and featurettes
-        ================================================== -->
-        <!-- Wrap the rest of the page in another container to center all the content. -->
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Make a Difference</h2>
-                <p>Teaching Assistants and Mentees make a huge difference in the lives of students. Many of you are here applying to TA because you were inspired by a past TA. Maybe next year a student will choose to "pay it forward" because of your efforts. </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Apply now</h2>
-                <p>click on the bottom below to start applying </p>
-                <p><a class="btn btn-secondary" href="ApplicationCreate.html" role="button">Apply »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Check the TA from past years!</h2>
-                <p>
-                    2020 - Ryan Howell <br>
-                    2019 - Scott Butler<br>
-                    Click the bottom for more info.
-                </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+    <section>
+        <div id="paragraph">
+            <div class="row">
+                <h2 class="Become TA">
+                    Applicants
+                </h2>
+                <p>* Applicants: 3</p>
+                <p>* Employed TAs: 2</p>
             </div>
         </div>
 
-        <hr class="head-divider">
 
-        <div class="container marketing">
+    </section>
 
-            <!-- Three columns of text below the carousel -->
-            <!-- START THE FEATURETTES -->
 
-            <div class="row featurette">
-                <div class="col-md-7">
-                    <h2 class="featurette-heading fw-normal lh-1">Best TA of the YEAR!! <span class="text-muted">Max LiMing Xue</span></h2>
-                    <p class="lead">The most passion and patient TA you can ever meet with huge smile!<br> Congratulations to Max Xue, the Outstanding TA for the School of Computing for all academic year!</p>
-                </div>
-                <div class="col-md-5">
-                    <img src="max.jpg" class="rounded float-right" alt="TA2 application" width="500" height="500">
+    <footer>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <!--Assignment1 work-->
+                    <th>Notes</th>
+                    <th>Prior Evals?</th>
+                    <th>Applicant Name</th>
+                    <th>Employed in</th>
+                    <th>Degree being Puresued</th>
+                    <th>Dept</th>
+                    <th>UofU GPA</th>
+                    <th>Last Modified</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!--Assignment1 work-->
+                    <td>I perfer to be cs3500 TA</td>
+                    <td>OKay</td>
+                    <td>Xukun Cai</td>
+                    <td>-unassigned-</td>
+                    <td>Ph.D</td>
+                    <td>CS</td>
+                    <td>4.0</td>
+                    <td>3-Aug-2022</td>
+                    <td><button type="button" class="btn btn-primary mb-3" onclick="javascript:window.location.href='ApplicationDetails.html';">View</button></td>
+                </tr>
+                <tr>
+                    <!--Assignment1 work-->
+                    <td id="td row2">I perfer to be cs3505 TA </td>
+                    <td>Good</td>
+                    <td>Xia Li</td>
+                    <td>-unassigned-</td>
+                    <td>Ph.D</td>
+                    <td>CS</td>
+                    <td>4.0</td>
+                    <td>1-Aug-2022</td>
+                    <td><button type="button" class="btn btn-primary mb-3" onclick="javascript:window.location.href='ApplicationDetails.html';">View</button></td>
+                </tr>
+                <tr>
+                    <!--Assignment1 work-->
+                    <td>I perfer to be cs5530 TA</td>
+                    <td>Good</td>
+                    <td>Wenlin Li</td>
+                    <td>-unassigned-</td>
+                    <td>Ph.D</td>
+                    <td>CS</td>
+                    <td>4.0</td>
+                    <td>4-Aug-2022</td>
+                    <td><button type="button" class="btn btn-primary mb-3" onclick="javascript:window.location.href='ApplicationDetails.html';">View</button></td>
+                </tr>
+            </tbody>
+        </table>
 
-                </div>
-            </div>
+        <br />  <br />  <br />  <br />  <br />  <br />
 
-            <hr class="featurette-divider">
 
-            <div class="row featurette">
-                <div class="col-md-7 order-md-2">
-                    <h2 class="featurette-heading fw-normal lh-1">Join the team, not only helping student <span class="text-muted">for yourself!</span></h2>
-                    <p class="lead">Past TA gain a lot of knowledge and experience from TAing.</p>
-                </div>
-                <div class="col-md-5 order-md-1">
-                    <img src="TA.jpg" class="rounded float-right" alt="TA2 application" width="500" height="500">
+    </footer>
 
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <!-- /END THE FEATURETTES -->
-
-        </div><!-- /.container -->
-        <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>© 2017–2022 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-        </footer>
-    </main>
 </body>
 </html>
