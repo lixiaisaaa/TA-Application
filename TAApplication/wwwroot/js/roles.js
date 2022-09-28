@@ -1,10 +1,10 @@
-﻿function changeRole(ID, Role) {
+﻿function changeRole(user_id, role) {
     $.post(
         {
             url: "/Admin/changeRole",
             data: {
-                ID: ID,
-                Role: Role
+                user_id: user_id,
+                role: role
             }
         }).done(function (data) {
             console.log("Sample of data:", data);

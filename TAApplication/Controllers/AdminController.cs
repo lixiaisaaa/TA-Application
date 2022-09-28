@@ -20,7 +20,7 @@ namespace TAApplication.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Change_Role(string user_id, string role)
+        public async Task<IActionResult> changeRole(string user_id, string role)
         {
             try
             {
