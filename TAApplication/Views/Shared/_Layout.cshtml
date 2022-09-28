@@ -25,6 +25,52 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                TA
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if ( User.IsInRole("Admin"))  // remember: spelling!
+                                { 
+                                    <li class="nav-item">
+                                            <a>Wenlin Li and Robert Li</a>
+                                    </li>
+                                <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">ApplicantList</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">ApplicantDetails</a>
+                                    </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Roles">Roles Manager page</a>
+                                </li>
+                                }
+                                @if (User.IsInRole("Applicant"))
+                                {
+                                    <li class="nav-item">
+                                        <a>Wenlin Li and Robert Li</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">ApplicantDetails</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantCreate">ApplicantCreate</a>
+                                    </li>
+    
+                                }
+                                @if (User.IsInRole("professor")) {
+                                    <li class="nav-item">
+                                        <a>Wenlin Li and Robert Li</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">ApplicantDetails</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">ApplicantList</a>
+                                    </li>
+                                }
+                            </ul>
+                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Identity
+@using TAApplication.Areas.Data
+@inject SignInManager<TAUser> SignInManager
+@inject UserManager<TAUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@{
+    var users = UserManager.Users.OrderBy(o => o.Name)
+        .ToArray();
+}
+<div>
+    <h>Change User Role</h>
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <!--Assignment3 work-->
+                <th>Name</th>
+                <th>Unid</th>
+                <th>Admin</th>
+                <th>Professor</th>
+                <th>Applicant</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(var index = 0; index < users.Length; index++){
+            <tr>
+            <td>@users[index].Name</td>
+            <td>@users[index].Unid</td>
+            <td>
+                    <div class="check-status">
+                        @if (await UserManager.IsInRoleAsync(users[index], "Admin"))
+                        {<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin')" checked>
+                        }
+                        else
+                        {<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin')" unchecked>
+                        }
+                </div>
+            </td>
+                <td>
+                    <div class="check-status">
+                        @if (await UserManager.IsInRoleAsync(users[index], "professor"))
+                        {
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor')" checked>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor')" unchecked>
+                        }
+                    </div>
+                </td>
+                <td>
+                    <div class="check-status">
+                        @if (await UserManager.IsInRoleAsync(users[index], "Applicant"))
+                        {
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant')" checked>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant')" unchecked>
+                        }
+                    </div>
+                </td>
+        </tr>
+            }
+    </tbody>
+    </table>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+<script scr = "~/js/Admin/roles.js" asp-append-version="true">
+</script>

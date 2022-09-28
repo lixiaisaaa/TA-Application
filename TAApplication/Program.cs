@@ -12,10 +12,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()  // Must turn it on!!!
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews(); 
+
+
+/*builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddControllersWithViews();*/
+
+
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var DB = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var um = scope.ServiceProvider.GetRequiredService<UserManager<TAUser>>();
+    var rm = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await DB.InitializeUsers(um, rm);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
