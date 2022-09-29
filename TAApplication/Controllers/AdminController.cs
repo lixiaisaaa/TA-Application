@@ -20,12 +20,12 @@ namespace TAApplication.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> changeRole(string user_id, string role)
+        public async Task<IActionResult> changeRole(string user_id, string role, string add_remove)
         {
             try
             {
                 var user = await _um.FindByIdAsync(user_id);
-                if (await _um.IsInRoleAsync(user, role))
+                if (await _um.IsInRoleAsync(user, role) && add_remove == "remove")
                 {
                     await _um.RemoveFromRoleAsync(user, role);
                 }

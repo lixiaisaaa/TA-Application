@@ -32,10 +32,11 @@
             <td>
                     <div class="check-status">
                         @if (await UserManager.IsInRoleAsync(users[index], "Admin"))
-                        {<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin')" checked>
+                        {<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin','remove')" checked>
                         }
                         else
-                        {<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin')" unchecked>
+                        {
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Admin','add')" unchecked>
                         }
                 </div>
             </td>
@@ -43,11 +44,11 @@
                     <div class="check-status">
                         @if (await UserManager.IsInRoleAsync(users[index], "professor"))
                         {
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor')" checked>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor','remove')" checked>
                         }
                         else
                         {
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor')" unchecked>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','professor','add')" unchecked>
                         }
                     </div>
                 </td>
@@ -55,11 +56,11 @@
                     <div class="check-status">
                         @if (await UserManager.IsInRoleAsync(users[index], "Applicant"))
                         {
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant')" checked>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant','remove')" checked>
                         }
                         else
                         {
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant')" unchecked>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="changeRole('@users[index].Id','Applicant','add')" unchecked>
                         }
                     </div>
                 </td>

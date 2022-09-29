@@ -18,14 +18,13 @@ namespace TAApplication.Data
                 return;
             }
 
-            if(r.Roles.ToArray().Length != 3) {
-                IdentityRole Admin = new IdentityRole("Admin");
-                await r.CreateAsync(Admin);
-                IdentityRole Professor = new IdentityRole("professor");
-                await r.CreateAsync(Professor);
-                IdentityRole Applicant = new IdentityRole("Applicant");
-                await r.CreateAsync(Applicant);
-            }
+            IdentityRole Admin = new IdentityRole("Admin");
+            await r.CreateAsync(Admin);
+            IdentityRole Professor = new IdentityRole("professor");
+            await r.CreateAsync(Professor);
+            IdentityRole Applicant = new IdentityRole("Applicant");
+            await r.CreateAsync(Applicant);
+
 
             var user = new TAUser { UserName = "admin@utah.edu", Unid = "u1234567", Name = "admin", EmailConfirmed = true, RefferedTo = "" };
             await u.CreateAsync(user, "123ABC!@#def");
