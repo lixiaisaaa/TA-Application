@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
+using TAApplication.Services;
+using WebPWrecover.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,8 @@ builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireCon
     .AddRoles<IdentityRole>()  // Must turn it on!!!
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 /*builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -89,6 +89,13 @@ namespace TAApplication.Areas.Identity.Pages.Account
             [Display(Name = "Unid")]
             public string Unid { get; set; }
 
+            [Required]
+            [Display(Name = "Preferred Full Name")]
+            public string Name { get; set; }
+
+            [Display(Name = "How would you like to referred to")]
+            public string ReferredTo { get; set; } = "";
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -125,7 +132,12 @@ namespace TAApplication.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 user.Unid = Input.Unid;
-
+                user.Name = Input.Name;
+                user.RefferedTo = Input.ReferredTo;
+                if (Input.ReferredTo == null) {
+                    user.RefferedTo = "";
+                }
+               
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -142,7 +154,7 @@ namespace TAApplication.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-
+                    await _userManager.AddToRoleAsync(user, "Applicant");
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAApplication", "TAApplication\TAApplication.csproj", "{722546FE-D813-4CC3-B3FC-1E83909962A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TAApplication", "TAApplication\TAApplication.csproj", "{722546FE-D813-4CC3-B3FC-1E83909962A5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{432AC268-EEC9-452A-AF08-61DEF0826323}"
 	ProjectSection(SolutionItems) = preProject
