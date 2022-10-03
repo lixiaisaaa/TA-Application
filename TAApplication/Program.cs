@@ -34,8 +34,10 @@ builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireCon
     .AddRoles<IdentityRole>()  // Must turn it on!!!
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
 
 /*builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
