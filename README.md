@@ -2,13 +2,15 @@
 ```
 Author:     Xia Li
 Partner:    Wenlin Li
-Date:       09/08/2022
+Date:       09/29/2022
 Course:     CS 4540, University of Utah, School of Computing
 GitHub ID:  Robert Li
 Repo:       https://github.com/uofu-cs4540-fall2022/taapplication-doubleli-2-0
 Commit Tag: Version 1.2
 Project:    TA Applecation
 Copyright:  CS 4540 and Xia Li and Wenlin Li - This work may not be copied for use in Academic Coursework.
+WebSite URL Xia Li: https://ec2-54-85-140-138.compute-1.amazonaws.com
+WebSite URL WenLin Li: https://ec2-34-238-157-183.compute-1.amazonaws.com
 ```
 # Overview of the TA Application Functionality 
 
@@ -19,14 +21,18 @@ implemented, implement basic Email confirmation using SendGrid, Update Navbar to
 
 Hi, Evaluators! We are developing this TA applications for students to apply job postion, we want to make it convinience for every students to apply.
 
-UI/UX choices - We have created some nice navigation link for user experience, user directly access all the pages easily.(what we have so far.)
-We also have a dropdown bar for TA grading, it is a easy access.
-Furthermore, we made every page compact and easy to see, the bootstrap 5 elements are reasonable.
+UI/UX choices - We have created different page for reviewing.
 
 # Assignment Specific Topics
 
-This webpage is done with boostrap 5 with some simple html and css, we write html for displaying elements and write css for changing property of the elements.
-This assignments gave us some basic idea for writing boostrap 5 with html and css.
+Implementation of user Authentication and Authorization.
+Authorization is what user can access to. We disign different page for different role.
+Authorization is determining who is the user. We have password and verification email as a key for it.
+
+Above and Beyond paragraph - describe what you did that is more involved then the basic requirements for the assignment.  If you followed external tutorials/advice, make sure you cite your sources.
+N/A
+Improvements paragraph - If you have done any other work to improve your application over previous assignments, describe them here.  If not, type: -na-
+N/A
 
 # Consulted Peers:
 
@@ -50,10 +56,11 @@ bootstrap icons: https://icons.getbootstrap.com/
 
 # References:
 
-    
+    1. Microsoft.com
+    2. stackoverflow.com
     
 
 # Time Expenditures:
 
-  
+  1. Assignment two: Predicted Hours: 8 Actual Hours: 19
 
