@@ -41,7 +41,7 @@ namespace TAApplication.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+/*        public IActionResult Privacy()
         {
             return View();
         }
@@ -66,6 +66,6 @@ namespace TAApplication.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }*/
     }
 }

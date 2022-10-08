@@ -1,16 +1,77 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TAApplication.Areas.Data;
+using TAApplication.Models;
 
 namespace TAApplication.Data
 {
     public class ApplicationDbContext : IdentityDbContext<TAUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
+
+        /// <summary>
+        /// Every time Save Changes is called, add timestamps
+        /// </summary>
+        /// <returns></returns>
+        public override int SaveChanges()  // JIM: Override save changes to add timestamps
+        {
+            AddTimestamps();
+            return base.SaveChanges();
+        }
+        /// <summary>
+        /// Every time Save Changes (Async) is called, add timestamps
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default)
+        {
+            AddTimestamps();   // JIM: Override save changes async to add timestamps
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+        /// <summary>
+        /// JIM: this code adds time/user to DB entry
+        /// 
+        /// Check the DB tracker to see what has been modified, and add timestamps/names as appropriate.
+        /// 
+        /// </summary>
+        private void AddTimestamps()
+        {
+            var entities = ChangeTracker.Entries()
+                .Where(x => x.Entity is ModificationTracking
+                        && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            var currentUsername = "";
+
+            if (_httpContextAccessor.HttpContext == null) // happens during startup/initialization code
+            {
+                currentUsername = "DBSeeder";
+            }
+            else
+            {
+                currentUsername = _httpContextAccessor.HttpContext.User.Identity?.Name;
+            }
+
+            currentUsername ??= "Sadness"; // JIM: compound assignment magic... test for null, and if so, assign value
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    ((ModificationTracking)entity.Entity).CreationDate = DateTime.UtcNow;
+                    ((ModificationTracking)entity.Entity).CreatedBy = currentUsername;
+                }
+                ((ModificationTracking)entity.Entity).ModificationDate = DateTime.UtcNow;
+                ((ModificationTracking)entity.Entity).ModifiedBy = currentUsername;
+            }
+        }
+
         public async Task InitializeUsers(UserManager<TAUser> u, RoleManager<IdentityRole> r)
         {
             Database.Migrate();
@@ -46,5 +107,6 @@ namespace TAApplication.Data
             await u.CreateAsync(s2, "123ABC!@#def");
             await u.AddToRoleAsync(s2, "Applicant");
         }
+        public DbSet<TAApplication.Models.Application> Application { get; set; }
     }
 }

@@ -9,11 +9,11 @@ using TAApplication.Data;
 
 #nullable disable
 
-namespace TAApplication.Data.Migrations
+namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220928073948_Professor")]
-    partial class Professor
+    [Migration("20221008230110_ApplicationModel")]
+    partial class ApplicationModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,6 +235,56 @@ namespace TAApplication.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TAApplication.Models.Application", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("GPA")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Pursuing")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SemestersCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("avaiableBefore")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("numberOfHour")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Application");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -284,6 +334,15 @@ namespace TAApplication.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TAApplication.Models.Application", b =>
+                {
+                    b.HasOne("TAApplication.Areas.Data.TAUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
