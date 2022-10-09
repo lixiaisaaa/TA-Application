@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,10 +12,17 @@ using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
+using ActionNameAttribute = Microsoft.AspNetCore.Mvc.ActionNameAttribute;
+using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
+using System.Web.Mvc;
 
 namespace TAApplication.Controllers
 {
-    public class ApplicationController : Controller
+    public class ApplicationController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<TAUser> _um;
@@ -26,8 +35,8 @@ namespace TAApplication.Controllers
 
         // GET: Application
         public async Task<IActionResult> Index()
-        {
-              return View(await _context.Application.ToListAsync());
+        {   
+              return View(await _context.Application.Include(o=>o.User).ToListAsync());
         }
 
         // GET: Application/Details/5
@@ -58,7 +67,7 @@ namespace TAApplication.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
         [Authorize]
         public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
         {
@@ -92,6 +101,32 @@ namespace TAApplication.Controllers
         // POST: Application/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /*        [HttpPost, ActionName("Edit")]
+                [ValidateAntiForgeryToken]
+                public ActionResult EditPost(int? id)
+                {
+                    if (id == null)
+                    {
+                        return NotFound();
+                    }
+                    var studentToUpdate = _context.Application.Find(id);
+                    if (TryUpdateModel<>(studentToUpdate, "",
+                       new string[] { "LastName", "FirstMidName", "EnrollmentDate" }))
+                    {
+                        try
+                        {
+                            _context.SaveChanges();
+
+                            return RedirectToAction("Index");
+                        }
+                        catch (DataException *//* dex *//*)
+                        {
+                            //Log the error (uncomment dex variable name and add a line here to write a log.
+                            ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                        }
+                    }
+                    return View(studentToUpdate);
+                }*/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
