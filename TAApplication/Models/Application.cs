@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EllipticCurve.Utils;
+using System.ComponentModel.DataAnnotations;
 using TAApplication.Areas.Data;
 
 namespace TAApplication.Models
@@ -21,14 +22,16 @@ namespace TAApplication.Models
         [Range(0,5)]
         public float GPA { get; set; }
 
-/*        public int UserID { get; set; }*/
+        /*        public int UserID { get; set; }*/
 
         public string? Department { get; set; }
 
+        [Range(0,Int32.MaxValue)]
         public int numberOfHour { get; set; }
 
         public Boolean avaiableBefore { get; set; }
 
+        [Display(Prompt = "0")]
         public int SemestersCount { get; set;}
 
         public TAUser User { get; set; } = null!;

@@ -16,9 +16,10 @@ using ActionNameAttribute = Microsoft.AspNetCore.Mvc.ActionNameAttribute;
 using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
 using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+
 using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
 using System.Web.Mvc;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace TAApplication.Controllers
 {
@@ -101,62 +102,60 @@ namespace TAApplication.Controllers
         // POST: Application/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /*        [HttpPost, ActionName("Edit")]
+        /*        [Authorize(Roles = "Admin,Applicant")]
+                [HttpPost, ActionName("Edit")]
                 [ValidateAntiForgeryToken]
                 public ActionResult EditPost(int? id)
                 {
                     if (id == null)
                     {
-                        return NotFound();
+                        return BadRequest();
                     }
-                    var studentToUpdate = _context.Application.Find(id);
-                    if (TryUpdateModel<>(studentToUpdate, "",
-                       new string[] { "LastName", "FirstMidName", "EnrollmentDate" }))
+                    var studentToUpdate = _context.Application.Where(o => o.ID == id).Include(o => o.User).FirstOrDefault();
+                    if (studentToUpdate != null) 
                     {
-                        try
+                        if (TryUpdateModelAsync<Application>(studentToUpdate, "", studentToUpdate => studentToUpdate.Pursuing, studentToUpdate => studentToUpdate.GPA))
                         {
-                            _context.SaveChanges();
-
-                            return RedirectToAction("Index");
-                        }
-                        catch (DataException *//* dex *//*)
-                        {
-                            //Log the error (uncomment dex variable name and add a line here to write a log.
-                            ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                            try {
+                                _context.SaveChanges();
+                                return RedirectToAction("Details", new { id = studentToUpdate.ID });
+                            }
+                            catch (DataException *//* dex *//*)
+                            {
+                                // manage error logging
+                                }
                         }
                     }
                     return View(studentToUpdate);
-                }*/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
-        {
-            if (id != application.ID)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+                }*/
+        [Authorize(Roles = "Admin,Applicant")]
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
+        {
+            if (id == null)
             {
-                try
-                {
-                    _context.Update(application);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicationExists(application.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            return View(application);
+            var applicationToUpdate = _context.Application.Where(o => o.ID == id).Include(o => o.User).FirstOrDefault();
+
+            if (applicationToUpdate != null)
+            {
+                if (await TryUpdateModelAsync<Application>(applicationToUpdate, "",
+                           s => s.Pursuing,
+                           s => s.GPA)) {
+                    try {
+                        _context.SaveChanges();
+                        return RedirectToAction("Details", new { id = applicationToUpdate.ID });
+                    }
+                    catch (DataException /* dex */)
+                    {
+                        // manage error logging
+                        }
+                }
+                    }
+            return View(applicationToUpdate);
         }
 
         // GET: Application/Delete/5
