@@ -20,6 +20,12 @@ using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
 using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
 using System.Web.Mvc;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using TAApplication.ViewModels;
+using Microsoft.Extensions.Hosting.Internal;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.IO;
+using WebNetCore5_Img_Storage.Model.Tool;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TAApplication.Controllers
 {
@@ -27,11 +33,13 @@ namespace TAApplication.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<TAUser> _um;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ApplicationController(ApplicationDbContext context, UserManager<TAUser> um)
+        public ApplicationController(ApplicationDbContext context, UserManager<TAUser> um, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _um = um;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Application
@@ -70,18 +78,104 @@ namespace TAApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken] 
         [Authorize]
-        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
+        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo")] ApplicationCreateViewModel application)
         {
             ModelState.Remove("User");
             application.User = await _um.GetUserAsync(User);
             if (ModelState.IsValid)
             {
-                _context.Add(application);
+                string uniqueFileName = null;
+                if (application.resume != null)
+                {
+                    string filename = application.resume.FileName.Substring(application.resume.FileName.LastIndexOf("."));
+                    if (filename != ".pdf")
+                    {
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
+                    }
+                    if (application.resume.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resume.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        application.resume.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                string uniqueFileName2 = null;
+                if (application.photo != null)
+                {
+                    string filename = application.photo.FileName.Substring(application.photo.FileName.LastIndexOf("."));
+                    if (filename != ".jpg" || filename != ".jpeg" || filename != ".png" || filename != ".jpg")
+                    {
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
+                    }
+
+
+                    if (application.photo.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else
+                    {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photo.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
+                        application.photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                Application a = new Application
+                {
+                    ID = application.ID,
+                    Pursuing = application.Pursuing,
+                    GPA = application.GPA,
+                    Department = application.Department,
+                    numberOfHour = application.numberOfHour,
+                    avaiableBefore = application.avaiableBefore,
+                    SemestersCount = application.SemestersCount,
+                    User = application.User,
+                    resumePath = uniqueFileName,
+                    photoPath = uniqueFileName2,
+                    ModificationDate = application.ModificationDate,
+                    ModifiedBy = application.ModifiedBy                  
+                };
+
+                _context.Add(a);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(application);
         }
+
+/*        public async Task<IActionResult> FileUpload(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    var filePath = Path.GetTempFileName();
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { count = files.Count, size });
+        }*/
 
         // GET: Application/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -98,6 +192,8 @@ namespace TAApplication.Controllers
             }
             return View(application);
         }
+
+
 
         // POST: Application/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.

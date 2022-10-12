@@ -35,5 +35,9 @@ namespace TAApplication.Models
         public int SemestersCount { get; set;}
 
         public TAUser User { get; set; } = null!;
+
+        public string? resumePath { get; set; }
+
+        public string? photoPath { get; set; }
     }
 }
