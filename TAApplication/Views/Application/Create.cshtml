@@ -1,4 +1,4 @@
-﻿@model TAApplication.ViewModels.ApplicationCreateViewModel
+﻿@model TAApplication.Models.Application
 
 @{
     ViewData["Title"] = "Create";
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label asp-for="photo" class="control-label"></label>
                 <div class="custom-file">
-                    <input asp-for="photo" class="form-control custom-file-input" />
+                    <input asp-for="photo" class="form-control custom-file-input" accept="image/*" />
                     <label class="custom-file-label"></label>
                 </div>
             </div>

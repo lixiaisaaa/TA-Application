@@ -1,5 +1,6 @@
 ﻿using EllipticCurve.Utils;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TAApplication.Areas.Data;
 
 namespace TAApplication.Models
@@ -35,6 +36,11 @@ namespace TAApplication.Models
         public int SemestersCount { get; set;}
 
         public TAUser User { get; set; } = null!;
+
+        [NotMapped]
+        public IFormFile? resume { get; set; }
+        [NotMapped]
+        public IFormFile? photo { get; set; }
 
         public string? resumePath { get; set; }
 

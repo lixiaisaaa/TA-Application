@@ -78,7 +78,7 @@ namespace TAApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken] 
         [Authorize]
-        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo")] ApplicationCreateViewModel application)
+        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo,resumePath,photoPath")] Application application)
         {
             ModelState.Remove("User");
             application.User = await _um.GetUserAsync(User);
@@ -110,7 +110,7 @@ namespace TAApplication.Controllers
                 if (application.photo != null)
                 {
                     string filename = application.photo.FileName.Substring(application.photo.FileName.LastIndexOf("."));
-                    if (filename != ".jpg" || filename != ".jpeg" || filename != ".png" || filename != ".jpg")
+                    if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
                     {
                         ModelState.AddModelError("File", "The file is not jpg.");
 
@@ -131,23 +131,10 @@ namespace TAApplication.Controllers
                     }
                 }
 
-                Application a = new Application
-                {
-                    ID = application.ID,
-                    Pursuing = application.Pursuing,
-                    GPA = application.GPA,
-                    Department = application.Department,
-                    numberOfHour = application.numberOfHour,
-                    avaiableBefore = application.avaiableBefore,
-                    SemestersCount = application.SemestersCount,
-                    User = application.User,
-                    resumePath = uniqueFileName,
-                    photoPath = uniqueFileName2,
-                    ModificationDate = application.ModificationDate,
-                    ModifiedBy = application.ModifiedBy                  
-                };
+                application.resumePath = uniqueFileName;
+                application.photoPath = uniqueFileName2;
 
-                _context.Add(a);
+                _context.Add(application);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -190,6 +177,7 @@ namespace TAApplication.Controllers
             {
                 return NotFound();
             }
+
             return View(application);
         }
 
@@ -225,33 +213,89 @@ namespace TAApplication.Controllers
                     return View(studentToUpdate);
 
                 }*/
-        [Authorize(Roles = "Admin,Applicant")]
-        [HttpPost, ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount")] Application application)
-        {
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            var applicationToUpdate = _context.Application.Where(o => o.ID == id).Include(o => o.User).FirstOrDefault();
 
-            if (applicationToUpdate != null)
+        [Authorize(Roles = "Admin,Applicant")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo,resumePath,photoPath")] Application application)
+        {
+            if (id != application.ID)
             {
-                if (await TryUpdateModelAsync<Application>(applicationToUpdate, "",
-                           s => s.Pursuing,
-                           s => s.GPA)) {
-                    try {
-                        _context.SaveChanges();
-                        return RedirectToAction("Details", new { id = applicationToUpdate.ID });
-                    }
-                    catch (DataException /* dex */)
+                return NotFound();
+            }
+            ModelState.Remove("User");
+            application.User = await _um.GetUserAsync(User);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                string uniqueFileName = null;
+                if (application.resume != null)
+                {
+                    string filename = application.resume.FileName.Substring(application.resume.FileName.LastIndexOf("."));
+                    if (filename != ".pdf")
                     {
-                        // manage error logging
-                        }
-                }
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
                     }
-            return View(applicationToUpdate);
+                    if (application.resume.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resume.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        application.resume.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                string uniqueFileName2 = null;
+                if (application.photo != null)
+                {
+                    string filename = application.photo.FileName.Substring(application.photo.FileName.LastIndexOf("."));
+                    if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
+                    {
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
+                    }
+
+
+                    if (application.photo.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else
+                    {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photo.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
+                        application.photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                application.resumePath = uniqueFileName;
+                application.photoPath = uniqueFileName2;
+
+                _context.Update(application);
+                await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ApplicationExists(application.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(application);
         }
 
         // GET: Application/Delete/5
