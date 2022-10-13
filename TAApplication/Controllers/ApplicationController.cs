@@ -43,9 +43,16 @@ namespace TAApplication.Controllers
         }
 
         // GET: Application
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {   
               return View(await _context.Application.Include(o=>o.User).ToListAsync());
+        }
+
+        [Authorize(Roles = "Admin,professor")]
+        public async Task<IActionResult> List()
+        {
+            return View(await _context.Application.Include(o => o.User).ToListAsync());
         }
 
         // GET: Application/Details/5
@@ -80,8 +87,13 @@ namespace TAApplication.Controllers
         [Authorize]
         public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo,resumePath,photoPath")] Application application)
         {
+
             ModelState.Remove("User");
             application.User = await _um.GetUserAsync(User);
+/*            if (application.GPA != 0)
+            {
+                return Json(new { Error = "You already created an application" });
+            }*/
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -136,7 +148,7 @@ namespace TAApplication.Controllers
 
                 _context.Add(application);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await Details(application.ID);
             }
             return View(application);
         }

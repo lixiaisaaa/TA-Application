@@ -1,0 +1,97 @@
+﻿@model IEnumerable<TAApplication.Models.Application>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pursuing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numberOfHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.avaiableBefore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SemestersCount)
+            </th>
+            <th>
+                Modified
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">@item.User.UserName</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pursuing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numberOfHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avaiableBefore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemestersCount)
+            </td>
+                <td>
+                    @item.ModificationDate
+                    @item.ModifiedBy
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@*<<div>
+    <h4>Reusume Upload</h4>
+
+    <form asp-controller="UploadFiles" asp-action="SingleFile" enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type ="submit">Submit </button>
+    </form>
+</div>
+
+<<div>
+    <h4>Image Upload</h4>
+
+    <form asp-controller="UploadFiles" asp-action="SingleFile" enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type="submit">Submit </button>
+    </form>
+</div>*@
