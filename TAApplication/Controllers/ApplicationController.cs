@@ -20,7 +20,6 @@ using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
 using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
 using System.Web.Mvc;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using TAApplication.ViewModels;
 using Microsoft.Extensions.Hosting.Internal;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.IO;
@@ -45,8 +44,8 @@ namespace TAApplication.Controllers
         // GET: Application
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
-        {   
-              return View(await _context.Application.Include(o=>o.User).ToListAsync());
+        {
+            return View(await _context.Application.Include(o => o.User).ToListAsync());
         }
 
         [Authorize(Roles = "Admin,professor")]
@@ -69,8 +68,9 @@ namespace TAApplication.Controllers
             {
                 return NotFound();
             }
-
-            return View(application);
+            ModelState.Remove("User");
+            application.User = await _um.GetUserAsync(User);
+            return Redirect("/Application/Details/" + application.ID);
         }
 
         // GET: Application/Create
@@ -83,17 +83,17 @@ namespace TAApplication.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,resume,photo,resumePath,photoPath")] Application application)
         {
 
             ModelState.Remove("User");
             application.User = await _um.GetUserAsync(User);
-/*            if (application.GPA != 0)
-            {
-                return Json(new { Error = "You already created an application" });
-            }*/
+            /*            if (application.GPA != 0)
+                        {
+                            return Json(new { Error = "You already created an application" });
+                        }*/
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -110,7 +110,8 @@ namespace TAApplication.Controllers
                     {
                         ModelState.AddModelError("File", "The file is too large.");
                     }
-                    else {
+                    else
+                    {
                         string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resume.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -148,33 +149,33 @@ namespace TAApplication.Controllers
 
                 _context.Add(application);
                 await _context.SaveChangesAsync();
-                await Details(application.ID);
+                return Redirect("/Application/Details/" + application.ID);
             }
             return View(application);
         }
 
-/*        public async Task<IActionResult> FileUpload(List<IFormFile> files)
-        {
-            long size = files.Sum(f => f.Length);
-
-            foreach (var formFile in files)
-            {
-                if (formFile.Length > 0)
+        /*        public async Task<IActionResult> FileUpload(List<IFormFile> files)
                 {
-                    var filePath = Path.GetTempFileName();
+                    long size = files.Sum(f => f.Length);
 
-                    using (var stream = System.IO.File.Create(filePath))
+                    foreach (var formFile in files)
                     {
-                        await formFile.CopyToAsync(stream);
+                        if (formFile.Length > 0)
+                        {
+                            var filePath = Path.GetTempFileName();
+
+                            using (var stream = System.IO.File.Create(filePath))
+                            {
+                                await formFile.CopyToAsync(stream);
+                            }
+                        }
                     }
-                }
-            }
 
-            // Process uploaded files
-            // Don't rely on or trust the FileName property without validation.
+                    // Process uploaded files
+                    // Don't rely on or trust the FileName property without validation.
 
-            return Ok(new { count = files.Count, size });
-        }*/
+                    return Ok(new { count = files.Count, size });
+                }*/
 
         // GET: Application/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -241,58 +242,60 @@ namespace TAApplication.Controllers
             {
                 try
                 {
-                string uniqueFileName = null;
-                if (application.resume != null)
-                {
-                    string filename = application.resume.FileName.Substring(application.resume.FileName.LastIndexOf("."));
-                    if (filename != ".pdf")
+                    string uniqueFileName = null;
+                    if (application.resume != null)
                     {
-                        ModelState.AddModelError("File", "The file is not jpg.");
+                        string filename = application.resume.FileName.Substring(application.resume.FileName.LastIndexOf("."));
+                        if (filename != ".pdf")
+                        {
+                            ModelState.AddModelError("File", "The file is not jpg.");
 
-                        return Json(new { foo = "The file is not jpg" });
+                            return Json(new { foo = "The file is not jpg" });
+                        }
+                        if (application.resume.Length > 2097152)
+                        {
+                            ModelState.AddModelError("File", "The file is too large.");
+                        }
+                        else
+                        {
+                            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resume.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                            application.resume.CopyTo(new FileStream(filePath, FileMode.Create));
+                        }
                     }
-                    if (application.resume.Length > 2097152)
+
+                    string uniqueFileName2 = null;
+                    if (application.photo != null)
                     {
-                        ModelState.AddModelError("File", "The file is too large.");
+                        string filename = application.photo.FileName.Substring(application.photo.FileName.LastIndexOf("."));
+                        if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
+                        {
+                            ModelState.AddModelError("File", "The file is not jpg.");
+
+                            return Json(new { foo = "The file is not jpg" });
+                        }
+
+
+                        if (application.photo.Length > 2097152)
+                        {
+                            ModelState.AddModelError("File", "The file is too large.");
+                        }
+                        else
+                        {
+                            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                            uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photo.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
+                            application.photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                        }
                     }
-                    else {
-                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resume.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        application.resume.CopyTo(new FileStream(filePath, FileMode.Create));
-                    }
-                }
 
-                string uniqueFileName2 = null;
-                if (application.photo != null)
-                {
-                    string filename = application.photo.FileName.Substring(application.photo.FileName.LastIndexOf("."));
-                    if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
-                    {
-                        ModelState.AddModelError("File", "The file is not jpg.");
+                    application.resumePath = uniqueFileName;
+                    application.photoPath = uniqueFileName2;
 
-                        return Json(new { foo = "The file is not jpg" });
-                    }
-
-
-                    if (application.photo.Length > 2097152)
-                    {
-                        ModelState.AddModelError("File", "The file is too large.");
-                    }
-                    else
-                    {
-                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-                        uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photo.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
-                        application.photo.CopyTo(new FileStream(filePath, FileMode.Create));
-                    }
-                }
-
-                application.resumePath = uniqueFileName;
-                application.photoPath = uniqueFileName2;
-
-                _context.Update(application);
-                await _context.SaveChangesAsync();
+                    _context.Update(application);
+                    await _context.SaveChangesAsync();
+                    return Redirect("/Application/Details/" + application.ID);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -342,14 +345,14 @@ namespace TAApplication.Controllers
             {
                 _context.Application.Remove(application);
             }
-            
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(List));
         }
 
         private bool ApplicationExists(int id)
         {
-          return _context.Application.Any(e => e.ID == id);
+            return _context.Application.Any(e => e.ID == id);
         }
     }
 }

@@ -4,7 +4,7 @@
 
 namespace TAApplication.Migrations
 {
-    public partial class ApplicationModel3 : Migration
+    public partial class ApplicationModel2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

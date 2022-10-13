@@ -12,7 +12,7 @@ using TAApplication.Data;
 namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221012060743_ApplicationModel2")]
+    [Migration("20221013094345_ApplicationModel2")]
     partial class ApplicationModel2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,6 +251,7 @@ namespace TAApplication.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Department")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("GPA")

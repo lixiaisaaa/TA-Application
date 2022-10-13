@@ -13,7 +13,7 @@ namespace TAApplication.Models
     {
 
         public int ID { get; set;}
-
+        [Required]
         public Pursuing Pursuing { get; set; }
 
         [Required]
@@ -24,12 +24,12 @@ namespace TAApplication.Models
         public float GPA { get; set; }
 
         /*        public int UserID { get; set; }*/
-
+        [Required]
         public string? Department { get; set; }
 
         [Range(0,Int32.MaxValue)]
         public int numberOfHour { get; set; }
-
+        [Required]
         public Boolean avaiableBefore { get; set; }
 
         [Display(Prompt = "0")]
@@ -37,8 +37,10 @@ namespace TAApplication.Models
 
         public TAUser User { get; set; } = null!;
 
+        
         [NotMapped]
         public IFormFile? resume { get; set; }
+        
         [NotMapped]
         public IFormFile? photo { get; set; }
 

@@ -12,8 +12,8 @@ using TAApplication.Data;
 namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221012100806_ApplicationModel4")]
-    partial class ApplicationModel4
+    [Migration("20221013091302_ApplicationModel")]
+    partial class ApplicationModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -251,6 +251,7 @@ namespace TAApplication.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Department")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("GPA")
@@ -278,10 +279,10 @@ namespace TAApplication.Migrations
                     b.Property<int>("numberOfHour")
                         .HasColumnType("int");
 
-                    b.Property<string>("photo")
+                    b.Property<string>("photoPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("resume")
+                    b.Property<string>("resumePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

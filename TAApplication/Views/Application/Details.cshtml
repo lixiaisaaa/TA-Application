@@ -2,13 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
+    
 }
 
-<h1>Details</h1>
+<h1>Application Details</h1>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.User.UserName)</h4>
-    <h5>@Html.DisplayFor(model => model.User.Unid)</h5>
+    <h4>Username: @Html.DisplayFor(model => model.User.Name)</h4>
+    <h5>Unid: @Html.DisplayFor(model => model.User.Unid)</h5>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -46,6 +47,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SemestersCount)
+        </dd>
+        <dd class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+        <dd class= "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModificationDate)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModificationDate)
         </dd>
     </dl>
 </div>

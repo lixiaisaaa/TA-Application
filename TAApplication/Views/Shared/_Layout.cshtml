@@ -34,13 +34,10 @@
                                 @if ( User.IsInRole("Admin"))  // remember: spelling!
                                 { 
                                     <li class="nav-item">
-                                            <a>Wenlin Li and Robert Li</a>
+                                    <a>Wenlin Li and Robert Li</a>
                                     </li>
                                 <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Application" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">ApplicantDetails</a>
                                     </li>
                                 <li class="nav-item">
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="Roles">Roles Manager page</a>
@@ -54,9 +51,9 @@
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Application" asp-action="Create">ApplicantCreate</a>
                                     </li>
-                                    <li class="nav-item">
+@*                                    <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Application" asp-action="Details" >ApplicantDetail</a>
-                                    </li>
+                                    </li>*@
     
                                 }
                                 @if (User.IsInRole("professor")) {
@@ -64,12 +61,24 @@
                                         <a>Wenlin Li and Robert Li</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">ApplicantDetails</a>
+                                        <a class="dropdown-item" asp-controller="Application" asp-action="List">ApplicantList</a>
                                     </li>
-                                    <li class="nav-item">
+@*                                    <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">ApplicantList</a>
-                                    </li>
+                                    </li>*@
                                 }
+                                    <li class="nav-item">
+                                    <a>OLD</a>
+                                    </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">Old Handmade Application List page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantCreate">Old Application Create page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">Old Application Details page</a>
+                                </li>
                             </ul>
                          </li>
                     </ul>

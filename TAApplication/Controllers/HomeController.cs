@@ -41,18 +41,20 @@ namespace TAApplication.Controllers
             return View();
         }
 
-/*        public IActionResult Privacy()
+        public IActionResult Privacy()
         {
             return View();
         }
 
         [Authorize(Roles = "Admin,professor")]
-        public IActionResult ApplicantList() { 
+        public IActionResult ApplicantList()
+        {
             return View();
         }
 
         [Authorize(Roles = "Applicant")]
-        public IActionResult ApplicantCreate() {
+        public IActionResult ApplicantCreate()
+        {
             return View();
         }
 
@@ -66,6 +68,6 @@ namespace TAApplication.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }*/
+        }
     }
 }
