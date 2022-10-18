@@ -9,8 +9,8 @@ Repo:       https://github.com/uofu-cs4540-fall2022/taapplication-doubleli-2-0
 Commit Tag: Version 1.2
 Project:    TA Application
 Copyright:  CS 4540 and Xia Li and Wenlin Li - This work may not be copied for use in Academic Coursework.
-WebSite URL Xia Li: https://ec2-54-85-140-138.compute-1.amazonaws.com
-WebSite URL WenLin Li: https://ec2-34-238-157-183.compute-1.amazonaws.com
+WebSite URL Xia Li: https://ec2-44-201-84-31.compute-1.amazonaws.com
+WebSite URL WenLin Li: https://ec2-54-236-246-111.compute-1.amazonaws.com
 ```
 # Overview of the TA Application Functionality 
 
