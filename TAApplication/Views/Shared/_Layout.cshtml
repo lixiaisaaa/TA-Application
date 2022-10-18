@@ -1,4 +1,9 @@
-﻿
+﻿@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject ApplicationDbContext db
+@inject UserManager<TAUser> um
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,16 +50,18 @@
                                 }
                                 @if (User.IsInRole("Applicant"))
                                 {
+                                    var app = db.Application.Where(o => o.User.Id == um.GetUserId(User)).FirstOrDefault();
+
                                     <li class="nav-item">
                                         <a>Wenlin Li and Robert Li</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Application" asp-action="Create">ApplicantCreate</a>
                                     </li>
-@*                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Application" asp-action="Details" >ApplicantDetail</a>
-                                    </li>*@
-    
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Application" asp-action="Details" asp-route-id="@app.ID" >ApplicantDetail</a>
+                                    </li>
+                                
                                 }
                                 @if (User.IsInRole("professor")) {
                                     <li class="nav-item">
@@ -66,6 +73,7 @@
 @*                                    <li class="nav-item">
                                         <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">ApplicantList</a>
                                     </li>*@
+                                    
                                 }
                                     <li class="nav-item">
                                     <a>OLD</a>

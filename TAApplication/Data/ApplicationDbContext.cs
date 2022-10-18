@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 using System.Security.Claims;
 using TAApplication.Areas.Data;
 using TAApplication.Models;
+using static System.Net.Mime.MediaTypeNames;
+using Application = TAApplication.Models.Application;
 
 namespace TAApplication.Data
 {
@@ -106,7 +109,16 @@ namespace TAApplication.Data
             var s2 = new TAUser { UserName = "u0000002@utah.edu", Unid = "u0000002", Name = "u2", EmailConfirmed = true, RefferedTo = "" };
             await u.CreateAsync(s2, "123ABC!@#def");
             await u.AddToRoleAsync(s2, "Applicant");
+
+            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, User = s };
+            Add(a);
+            SaveChanges();
+
+            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, User = s };
+            Add(a);
+            SaveChanges();
         }
-        public DbSet<TAApplication.Models.Application> Application { get; set; }
+        public DbSet<TAApplication.Models.Application> Application { 
+            get; set; }
     }
 }

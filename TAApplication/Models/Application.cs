@@ -35,6 +35,11 @@ namespace TAApplication.Models
         [Display(Prompt = "0")]
         public int SemestersCount { get; set;}
 
+        public string? PersonalStatement { get; set; }
+
+        public string? TransferSchool { get; set; }
+
+        public string? LinkedinURL { get; set; }
         public TAUser User { get; set; } = null!;
 
         
