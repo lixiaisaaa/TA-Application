@@ -110,12 +110,12 @@ namespace TAApplication.Data
             await u.CreateAsync(s2, "123ABC!@#def");
             await u.AddToRoleAsync(s2, "Applicant");
 
-            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, User = s };
+            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, PersonalStatement = "hello" ,TransferSchool = "SLCC",LinkedinURL="https://google.com",User = s };
             Add(a);
             SaveChanges();
 
-            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, User = s };
-            Add(a);
+            Application a1 = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, SemestersCount = 10, User = s1 };
+            Add(a1);
             SaveChanges();
         }
         public DbSet<TAApplication.Models.Application> Application { 
