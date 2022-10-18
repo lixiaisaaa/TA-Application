@@ -2,14 +2,12 @@
 
 @{
     ViewData["Title"] = "Details";
-    
 }
 
-<h1>Application Details</h1>
+<h1>Details</h1>
 
 <div>
-    <h4>Username: @Html.DisplayFor(model => model.User.Name)</h4>
-    <h5>Unid: @Html.DisplayFor(model => model.User.Unid)</h5>
+    <h4>Application</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -48,22 +46,38 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SemestersCount)
         </dd>
-        <dd class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedBy)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonalStatement)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PersonalStatement)
         </dd>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedBy)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TransferSchool)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TransferSchool)
         </dd>
-        <dd class= "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModificationDate)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LinkedinURL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LinkedinURL)
         </dd>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModificationDate)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.resumePath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.resumePath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.photoPath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.photoPath)
         </dd>
     </dl>
 </div>
-<div><a href="/uploads/@Model.resumePath">Download PDF</a></div>
-<div><img src="/uploads/@Model.photoPath" alt="professional photo"></div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
     <a asp-action="Index">Back to List</a>

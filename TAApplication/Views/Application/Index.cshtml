@@ -2,18 +2,94 @@
 
 @{
     ViewData["Title"] = "Index";
-    var number = 0;
-    float totalGPA = 0;
-    float averageGPA = 0;
 }
 
-        @foreach (var item in Model)
-        {
-            number += 1;
-            totalGPA += item.GPA;
-            averageGPA = totalGPA / (float)number;
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pursuing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numberOfHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.avaiableBefore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SemestersCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonalStatement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransferSchool)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedinURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resumePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.photoPath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pursuing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numberOfHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avaiableBefore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemestersCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonalStatement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransferSchool)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkedinURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.resumePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.photoPath)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
 }
-    <p>Total number of applications is @number</p>
-    <p>Average GPA is @averageGPA</p>
-    <p><a asp-action="List" >List</a></p>
-    
+    </tbody>
+</table>
