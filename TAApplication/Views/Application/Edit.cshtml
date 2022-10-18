@@ -15,7 +15,8 @@
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <label asp-for="Pursuing" class="control-label"></label>
-                <select asp-for="Pursuing" class="form-control"></select>
+                <select asp-for="Pursuing" asp-items="@Html.GetEnumSelectList<Pursuing>()"
+                        class="form-control"></select>
                 <span asp-validation-for="Pursuing" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,14 +60,19 @@
                 <span asp-validation-for="LinkedinURL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="resumePath" class="control-label"></label>
-                <input asp-for="resumePath" class="form-control" />
-                <span asp-validation-for="resumePath" class="text-danger"></span>
+                <label asp-for="resumeURL" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="resumeURL" id="resume" class="form-control custom-file-input" accept=".pdf" />
+                    <label class="custom-file-label"></label>
+                </div>
             </div>
+
             <div class="form-group">
-                <label asp-for="photoPath" class="control-label"></label>
-                <input asp-for="photoPath" class="form-control" />
-                <span asp-validation-for="photoPath" class="text-danger"></span>
+                <label asp-for="photoURL" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="photoURL" class="form-control custom-file-input" accept="image/*" />
+                    <label class="custom-file-label"></label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -75,10 +81,15 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function ()){
+                var filename = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(filename);
+            }
+        });
+    </script>
 }

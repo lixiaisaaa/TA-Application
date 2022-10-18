@@ -4,6 +4,9 @@
 
 @inject ApplicationDbContext db
 @inject UserManager<TAUser> um
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,57 +39,49 @@
                                 TA
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @if ( User.IsInRole("Admin"))  // remember: spelling!
-                                { 
-                                    <li class="nav-item">
-                                    <a>Wenlin Li and Robert Li</a>
-                                    </li>
-                                <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Application" asp-action="Index">Home</a>
-                                    </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Roles">Roles Manager page</a>
-                                </li>
-                                }
-                                @if (User.IsInRole("Applicant"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Applicant") || User.IsInRole("professor"))  // remember: spelling!
                                 {
                                     var app = db.Application.Where(o => o.User.Id == um.GetUserId(User)).FirstOrDefault();
-
                                     <li class="nav-item">
-                                        <a>Wenlin Li and Robert Li</a>
+                                        <a> PS5</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Application" asp-action="Create">ApplicantCreate</a>
+                                        <a class="dropdown-item" asp-controller="Application" asp-action="Index">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Application" asp-action="Details" asp-route-id="@app.ID" >ApplicantDetail</a>
+                                        <a class="dropdown-item" asp-controller="Application" asp-action="List">Application List page</a>
                                     </li>
-                                
-                                }
-                                @if (User.IsInRole("professor")) {
+                                    @if (object.ReferenceEquals(null, app))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-controller="Application" asp-action="Create" >Application Create page</a>
+                                        </li>
+                                    }
+                                    @if (!object.ReferenceEquals(null, app))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-controller="Application" asp-action="Details" asp-route-id="@app.ID">Application Details page (for Applicant @um.GetUserName(User) ) </a>
+                                        </li>
+                                    }
+    
                                     <li class="nav-item">
-                                        <a>Wenlin Li and Robert Li</a>
+                                        <a>Admin</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Application" asp-action="List">ApplicantList</a>
+                                        <a class="dropdown-item" asp-controller="Admin" asp-action="Roles">Roles Manager page</a>
                                     </li>
-@*                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">ApplicantList</a>
-                                    </li>*@
-                                    
-                                }
                                     <li class="nav-item">
-                                    <a>OLD</a>
+                                        <a>OLD</a>
                                     </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">Old Handmade Application List page</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantCreate">Old Application Create page</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">Old Application Details page</a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantList">Old Handmade Application List page</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantCreate">Old Application Create page</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ApplicantDetails">Old Application Details page</a>
+                                </li>}
                             </ul>
                          </li>
                     </ul>

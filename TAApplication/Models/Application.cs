@@ -48,13 +48,15 @@ namespace TAApplication.Models
 
         
         [NotMapped]
-        public IFormFile? resume { get; set; }
+        public IFormFile? resumeURL { get; set; }
         
         [NotMapped]
-        public IFormFile? photo { get; set; }
+        public IFormFile? photoURL { get; set; }
 
         public string? resumePath { get; set; }
 
         public string? photoPath { get; set; }
+
+/*        public string? UserID { get; set; }*/
     }
 }

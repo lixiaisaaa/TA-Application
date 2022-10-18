@@ -1,28 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
+using ActionNameAttribute = Microsoft.AspNetCore.Mvc.ActionNameAttribute;
+using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
+
+using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
+using System.Web.Mvc;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using Microsoft.Extensions.Hosting.Internal;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.IO;
+using WebNetCore5_Img_Storage.Model.Tool;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TAApplication.Controllers
 {
-    public class ApplicationController : Controller
+    public class ApplicationController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<TAUser> _um;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ApplicationController(ApplicationDbContext context)
+        public ApplicationController(ApplicationDbContext context, UserManager<TAUser> um, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _um = um;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Application
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Application.ToListAsync());
+            return View(await _context.Application.Include(o => o.User).ToListAsync());
+        }
+
+        [Authorize(Roles = "Admin,professor")]
+        public async Task<IActionResult> List()
+        {
+            return View(await _context.Application.Include(o => o.User).ToListAsync());
         }
 
         // GET: Application/Details/5
@@ -54,13 +83,70 @@ namespace TAApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,PersonalStatement,TransferSchool,LinkedinURL,resumePath,photoPath")] Application application)
+        public async Task<IActionResult> Create([Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,PersonalStatement,TransferSchool,LinkedinURL,resumeURL,photoURL,resumePath,photoPath")] Application application)
         {
+            ModelState.Remove("User");
+            application.User = await _um.GetUserAsync(User);
+            /*            if (application.GPA != 0)
+                        {
+                            return Json(new { Error = "You already created an application" });
+                        }*/
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (application.resumeURL != null)
+                {
+                    string filename = application.resumeURL.FileName.Substring(application.resumeURL.FileName.LastIndexOf("."));
+                    if (filename != ".pdf")
+                    {
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
+                    }
+                    if (application.resumeURL.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else
+                    {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resumeURL.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        application.resumeURL.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                string uniqueFileName2 = null;
+                if (application.photoURL != null)
+                {
+                    string filename = application.photoURL.FileName.Substring(application.photoURL.FileName.LastIndexOf("."));
+                    if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
+                    {
+                        ModelState.AddModelError("File", "The file is not jpg.");
+
+                        return Json(new { foo = "The file is not jpg" });
+                    }
+
+
+                    if (application.photoURL.Length > 2097152)
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                    else
+                    {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photoURL.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
+                        application.photoURL.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+                }
+
+                application.resumePath = uniqueFileName;
+                application.photoPath = uniqueFileName2;
+
                 _context.Add(application);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Application/Details/" + application.ID);
             }
             return View(application);
         }
@@ -86,19 +172,72 @@ namespace TAApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,PersonalStatement,TransferSchool,LinkedinURL,resumePath,photoPath")] Application application)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Pursuing,GPA,Department,numberOfHour,avaiableBefore,SemestersCount,PersonalStatement,TransferSchool,LinkedinURL,resumeURL,photoURL,resumePath,photoPath")] Application application)
         {
             if (id != application.ID)
             {
                 return NotFound();
             }
-
+            ModelState.Remove("User");
+            application.User = await _um.GetUserAsync(User);
             if (ModelState.IsValid)
             {
                 try
                 {
+                    string uniqueFileName = null;
+                    if (application.resumeURL != null)
+                    {
+                        string filename = application.resumeURL.FileName.Substring(application.resumeURL.FileName.LastIndexOf("."));
+                        if (filename != ".pdf")
+                        {
+                            ModelState.AddModelError("File", "The file is not jpg.");
+
+                            return Json(new { foo = "The file is not jpg" });
+                        }
+                        if (application.resumeURL.Length > 2097152)
+                        {
+                            ModelState.AddModelError("File", "The file is too large.");
+                        }
+                        else
+                        {
+                            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + application.resumeURL.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                            application.resumeURL.CopyTo(new FileStream(filePath, FileMode.Create));
+                        }
+                    }
+
+                    string uniqueFileName2 = null;
+                    if (application.photoURL != null)
+                    {
+                        string filename = application.photoURL.FileName.Substring(application.photoURL.FileName.LastIndexOf("."));
+                        if (filename != ".jpg" && filename != ".jpeg" && filename != ".png" && filename != ".gif")
+                        {
+                            ModelState.AddModelError("File", "The file is not jpg.");
+
+                            return Json(new { foo = "The file is not jpg" });
+                        }
+
+
+                        if (application.photoURL.Length > 2097152)
+                        {
+                            ModelState.AddModelError("File", "The file is too large.");
+                        }
+                        else
+                        {
+                            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                            uniqueFileName2 = Guid.NewGuid().ToString() + "_" + application.photoURL.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName2);
+                            application.photoURL.CopyTo(new FileStream(filePath, FileMode.Create));
+                        }
+                    }
+
+                    application.resumePath = uniqueFileName;
+                    application.photoPath = uniqueFileName2;
+
                     _context.Update(application);
                     await _context.SaveChangesAsync();
+                    return Redirect("/Application/Details/" + id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
