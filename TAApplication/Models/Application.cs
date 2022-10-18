@@ -25,20 +25,24 @@ namespace TAApplication.Models
 
         /*        public int UserID { get; set; }*/
         [Required]
+        [Display(Prompt = "e.g., CS, CE, ME")]
         public string? Department { get; set; }
 
-        [Range(0,Int32.MaxValue)]
+        [Required]
+        [Range(5, 20)]
         public int numberOfHour { get; set; }
         [Required]
         public Boolean avaiableBefore { get; set; }
-
+        [Required]
         [Display(Prompt = "0")]
+        [Range(0, Int32.MaxValue)]
         public int SemestersCount { get; set;}
-
+        [StringLength(50000, ErrorMessage = " Personal statement can't be more than 50000 characters.")]
         public string? PersonalStatement { get; set; }
 
         public string? TransferSchool { get; set; }
-
+        
+        [Url]
         public string? LinkedinURL { get; set; }
         public TAUser User { get; set; } = null!;
 
