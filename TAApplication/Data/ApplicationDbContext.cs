@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 ﻿using Microsoft.AspNetCore.Http;
-=======
 ﻿/**
 * Author:    Xia Li
 * Partner:   Wenlin Li
@@ -17,8 +15,6 @@
 *
 * This db file controller for db.
 */
-
->>>>>>> Stashed changes
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
