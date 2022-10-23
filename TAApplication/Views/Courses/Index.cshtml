@@ -1,0 +1,142 @@
+﻿@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.AspNetCore.Identity
+@inject ApplicationDbContext db
+@model IEnumerable<TAApplication.Models.Course>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.titleOftheCourse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.profID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.profName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeAndDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.creditHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollment)
+            </th>
+            <th> @if (User.IsInRole("Admin")){
+                    @Html.DisplayNameFor(model => model.note)
+                }
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.titleOftheCourse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Section)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.profID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.profName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeAndDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.creditHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enrollment)
+            </td>
+            <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        {
+
+                        }
+                        @Html.DisplayFor(modelItem => item.note)
+@*                        <button type="button" class="btn btn-primary" onclick="clicked()" value="@item">Edit</button>
+                        <textarea class="form-control" id="sky" aria-label="With textarea" style="display:none;"></textarea>*@
+                    }
+            </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    { 
+                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@*<script>
+    function clicked() {
+        var x = document.getElementById("sky");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+            var text = $("#sky").val();
+            var item = $("this").val()
+            item.note = text;
+            $("#sky").val("");
+        }
+    }
+</script>*@

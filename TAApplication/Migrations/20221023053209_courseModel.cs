@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TAApplication.Migrations
 {
-    public partial class ApplicationModel : Migration
+    public partial class courseModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,32 @@ namespace TAApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Course",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Semester = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Year = table.Column<int>(type: "int", nullable: true),
+                    titleOftheCourse = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseNumber = table.Column<int>(type: "int", nullable: false),
+                    Section = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    profID = table.Column<int>(type: "int", nullable: false),
+                    profName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeAndDays = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    creditHours = table.Column<int>(type: "int", nullable: false),
+                    Enrollment = table.Column<int>(type: "int", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Course", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -84,6 +110,9 @@ namespace TAApplication.Migrations
                     numberOfHour = table.Column<int>(type: "int", nullable: false),
                     avaiableBefore = table.Column<bool>(type: "bit", nullable: false),
                     SemestersCount = table.Column<int>(type: "int", nullable: false),
+                    PersonalStatement = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: true),
+                    TransferSchool = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkedinURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     resumePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     photoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -251,6 +280,9 @@ namespace TAApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Course");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -115,9 +115,26 @@ namespace TAApplication.Data
 
             Application a1 = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, numberOfHour = 10, SemestersCount = 10, User = s1 };
             Add(a1);
+
+            Course c1 = new() { Semester = "Spring", Year = 2023, CourseNumber = 1400, note = "Need 2 TAs" };
+            Add(c1);
+
+            Course c2 = new() { Semester = "Spring", Year = 2023, CourseNumber = 1420, note = "Need 2 TAs" };
+            Add(c2);
+
+            Course c3 = new() { Semester = "Spring", Year = 2023, CourseNumber = 2420, note = "Need 2 TAs" };
+            Add(c3);
+
+            Course c4 = new() { Semester = "Spring", Year = 2023, CourseNumber = 4150, note = "Need 2 TAs" };
+            Add(c4);
+
+            Course c5 = new() { Semester = "Spring", Year = 2023, CourseNumber = 4400, note = "Need 2 TAs" };
+            Add(c5);
             SaveChanges();
+
         }
         public DbSet<TAApplication.Models.Application> Application { 
             get; set; }
+        public DbSet<TAApplication.Models.Course> Course { get; set; }
     }
 }

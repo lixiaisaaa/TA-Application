@@ -12,14 +12,14 @@ using TAApplication.Data;
 namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221017223557_1")]
-    partial class _1
+    [Migration("20221023053209_courseModel")]
+    partial class courseModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -257,6 +257,9 @@ namespace TAApplication.Migrations
                     b.Property<float>("GPA")
                         .HasColumnType("real");
 
+                    b.Property<string>("LinkedinURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -264,11 +267,18 @@ namespace TAApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PersonalStatement")
+                        .HasMaxLength(50000)
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Pursuing")
                         .HasColumnType("int");
 
                     b.Property<int>("SemestersCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("TransferSchool")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -290,6 +300,61 @@ namespace TAApplication.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Application");
+                });
+
+            modelBuilder.Entity("TAApplication.Models.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CourseNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Enrollment")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Section")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Semester")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeAndDays")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
+
+                    b.Property<int>("creditHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("profID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("profName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("titleOftheCourse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
