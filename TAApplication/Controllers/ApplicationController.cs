@@ -15,33 +15,19 @@
 * This c# for whole controller.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
 using ActionNameAttribute = Microsoft.AspNetCore.Mvc.ActionNameAttribute;
-using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
 using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 using BindAttribute = Microsoft.AspNetCore.Mvc.BindAttribute;
 
 using ValidateAntiForgeryTokenAttribute = Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute;
-using System.Web.Mvc;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using Microsoft.Extensions.Hosting.Internal;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using System.IO;
-using WebNetCore5_Img_Storage.Model.Tool;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TAApplication.Controllers
 {

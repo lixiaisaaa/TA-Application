@@ -20,7 +20,6 @@ using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Services;
-using WebPWrecover.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +44,18 @@ builder.Services.AddControllersWithViews();*/
 
 
 
+builder.Services.AddAuthentication()
+                 .AddGoogle(options =>
+                 {
+                     IConfigurationSection googleAuthNSection =
+                     builder.Configuration.GetSection("Authentication:Google");
+
+                     options.ClientId = googleAuthNSection["ClientId"];
+                     options.ClientSecret = googleAuthNSection["ClientSecret"];
+                 });
+
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {

@@ -18,9 +18,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using TAApplication.Services;
 
-namespace WebPWrecover.Services;
+namespace TAApplication.Services;
 
 public class EmailSender : IEmailSender
 {

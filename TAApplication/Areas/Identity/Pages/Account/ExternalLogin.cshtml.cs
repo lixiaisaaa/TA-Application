@@ -85,6 +85,12 @@ namespace TAApplication.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            public string Unid { get; set; }
+
+            [Required]
+            public string Name { get; set; }
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -151,8 +157,12 @@ namespace TAApplication.Areas.Identity.Pages.Account
             }
 
             if (ModelState.IsValid)
-            {
+            {   
                 var user = CreateUser();
+
+                user.Unid = Input.Unid;
+
+                user.Name = Input.Name;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

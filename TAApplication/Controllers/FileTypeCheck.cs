@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebNetCore5_Img_Storage.Model.Tool
+namespace TAApplication.Controllers
 {
     /// <summary>
     /// 文件真实格式检查
@@ -118,7 +118,7 @@ namespace WebNetCore5_Img_Storage.Model.Tool
                 return false;
             }
             bool flag = false;
-            string ext = System.IO.Path.GetExtension(fileName);
+            string ext = Path.GetExtension(fileName);
             if (string.IsNullOrEmpty(ext))
             {
                 return false;
