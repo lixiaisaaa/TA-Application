@@ -6,8 +6,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using TAApplication.Data;
 using TAApplication.Models;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using NuGet.Protocol;
+using System.Text.Json;
+using SendGrid.Helpers.Mail;
+using System.Xml.Linq;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Web.Helpers;
+using System.Text.Json.Nodes;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using OpenQA.Selenium;
+using System.Collections;
 
 namespace TAApplication.Controllers
 {
@@ -161,7 +176,28 @@ namespace TAApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public async Task<ActionResult> UploadCourses([FromBody] List<string[]> courses)
+        {
 
+            foreach (string[] course in courses)
+            {
+                Course c = new Course();
+                c.creditHours = Int32.Parse(course[0]);
+                c.titleOftheCourse = course[1];
+                c.CourseNumber = Int32.Parse(course[2]);
+                c.Section = course[3];
+                c.Semester = course[4];
+                c.Year = Int32.Parse(course[5]);
+                c.profID = course[6];
+                c.Enrollment = Int32.Parse(course[7]);
+                c.Department = course[8];
+                _context.Add(c);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        }
         private bool CourseExists(int id)
         {
           return _context.Course.Any(e => e.Id == id);

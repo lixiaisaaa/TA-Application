@@ -1,0 +1,206 @@
+﻿@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject ApplicationDbContext db
+@inject UserManager<TAUser> um
+@model IEnumerable<TAApplication.Models.Slot>
+
+@{
+    ViewData["Title"] = "Index";
+    TAUser user = await um.GetUserAsync(User);
+}
+
+<h1>Availability for @user.Name </h1>
+<p>
+    Please indicate all times that you <b>will be</b> available during the week.  This information is used by
+    the hiring committee and professors to determine class coverage, lab coverage, office hour coverage, etc.
+    (Note: Any work necessary on the weekends will be up to you and your professor to negotiate.)
+</p>
+<p>
+    If your schedule changes, please come back and update this record.
+</p>
+<div id="canvas_div">
+</div>
+<button id="save" class="btn btn-primary" onclick="save()">Save</button>
+<span id="changes" class="text-danger"></span>
+
+<script type="text/javascript">
+
+    var changed = false;
+    let bg_color = 0x000000;
+    let rect_color = 0x6FA8DC;
+    let width = 800;
+    let height = 600;
+    const map1 = new Map();
+    var times = [];
+    var color = 0xFFF2CC;
+    var globalColor = null;
+    var mouse_down = false;
+    app = new PIXI.Application(width, height, { backgroundColor: bg_color });
+    const style = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 20,
+        fill: ['white']   
+    });
+
+    const style2 = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 12,
+        fill: ['white']
+    });
+    const monday = new PIXI.Text('Monday', style);
+    monday.x = 65;
+    monday.y = 20;
+    const tuesday = new PIXI.Text('Tuesday', style);
+    tuesday.x = 65 + 130;
+    tuesday.y = 20;
+    const wednesday = new PIXI.Text('Wednesday', style);
+    wednesday.x = 50 + 130 * 2;
+    wednesday.y = 20;
+    const thursday = new PIXI.Text('Thursday', style);
+    thursday.x = 55 + 130 * 3;
+    thursday.y = 20;
+    const friday = new PIXI.Text('Friday', style);
+    friday.x = 65 + 130 * 4;
+    friday.y = 20;
+    const instruction =  new PIXI.Text('Click and drag to set/un-set available times.', style2);
+    instruction.x = 50;
+    instruction.y = 550;
+    var square = new PIXI.Graphics();
+    square.beginFill(color);
+    square.drawRect(0, 0, 110, 10);
+    square.x = 310;
+    square.y = 550;
+    const available = new PIXI.Text('Available', style);
+    available.x = 325;
+    available.y = 565;
+    var square2 = new PIXI.Graphics();
+    square2.beginFill(rect_color);
+    square2.drawRect(0, 0, 110, 10);
+    square2.x = 520;
+    square2.y = 550;
+    const NotAvailable = new PIXI.Text('Not Available', style);
+    NotAvailable.x = 520;
+    NotAvailable.y = 565;
+    $("#canvas_div").append(app.view);
+    app.stage.addChild(monday);
+    app.stage.addChild(tuesday);
+    app.stage.addChild(wednesday);
+    app.stage.addChild(thursday);
+    app.stage.addChild(friday);
+    app.stage.addChild(instruction);
+    app.stage.addChild(square);
+    app.stage.addChild(available);
+    app.stage.addChild(NotAvailable);
+    app.stage.addChild(square2);
+    build_square();
+    line();
+    generate_time();
+    var squares = [];
+
+    function build_square() {
+        for(let j = 0; j < 5; j++){
+            for (let i = 0; i < 48; i++) {
+                var square = new PIXI.Graphics();
+                square.beginFill(rect_color);
+                square.drawRect(0, 0, 110, 10);
+                square.x = 50 + 130 * j;
+                square.y = 50 + 10 * i;
+                square.interactive = true;
+                square.color = rect_color;
+                square.on('mousedown', pointer_down);
+                square.on('mouseover', pointer_over);
+                square.on('mouseup', pointer_up);
+                app.stage.addChild(square);
+            }
+        
+        }
+       
+    }
+
+    function line(){
+        for(let i = 0; i <=12; i++) {
+            var line = new PIXI.Graphics();
+            line.lineStyle(1, 0xFFFFFF);
+            line.moveTo(0, i*40);
+            line.lineTo(680, i * 40);
+            line.position.x = 20;
+            line.position.y = 50;
+            app.stage.addChild(line);
+        }
+    }
+
+    function generate_time(){
+        for(let i = 0; i <= 4; i++){
+            var t = (8+i).toString() + ":00 am";
+            var time = new PIXI.Text(t, style);
+            time.x = 712;
+            time.y = 40 + 40*i;
+            app.stage.addChild(time);
+        }
+        for (let i = 0; i <= 7; i++) {
+            var t = (1 + i).toString() + ":00 pm";
+            var time = new PIXI.Text(t, style);
+            time.x = 712;
+            time.y = 240 + 40 * i;
+            app.stage.addChild(time);
+        }
+    }
+
+    function pointer_down() {
+        var time = [this.x, this.y];
+        if (this.color == rect_color){
+            this.beginFill(color);
+            this.drawRect(0, 0, 110, 10);
+            this.color = color;
+            globalColor = color;
+            map1.set(this.x,this.y);
+        } else {
+            this.beginFill(rect_color);
+            this.drawRect(0, 0, 110, 10);
+            this.color = rect_color;
+            globalColor = rect_color;
+            if(map1.has(this.x)){
+                map1.delete(this.x);
+            }
+        }
+            mouse_down = true;
+        changed = true;
+        document.getElementById('changes').innerHTML = 'Warning: Data Not Saved';
+    }
+    function pointer_up() {
+        mouse_down = false;
+    }
+
+    function pointer_over() {
+        if (mouse_down) {
+                this.beginFill(globalColor);
+                this.drawRect(0, 0, 110, 10);
+                this.color = globalColor;
+                changed = true;
+                document.getElementById('changes').innerHTML = 'Warning: Data Not Saved';
+            if (this.color == rect_color) {
+                if (map1.has(this.x)) {
+                    map1.delete(this.x);
+                }
+            }else{
+                map1.set(this.x, this.y);
+            }
+        }
+    }
+    function save(){
+        if (changed){
+            document.getElementById('changes').innerHTML = '';
+        }
+        const iterator1 = map1.keys();
+        var key = iterator1.next();
+        while (key.value != null) {
+            var value = map1.get(key);
+            times.push([key,value]);
+            key = key.next();
+            console.log(key.value);
+        }
+        console.log(key.value);
+    }
+</script>

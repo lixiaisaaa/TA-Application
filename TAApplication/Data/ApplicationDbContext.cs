@@ -126,7 +126,7 @@ namespace TAApplication.Data
             await u.CreateAsync(s2, "123ABC!@#def");
             await u.AddToRoleAsync(s2, "Applicant");
 
-            Application a = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, numberOfHour = 10 ,SemestersCount = 10, PersonalStatement = "hello" ,TransferSchool = "SLCC",LinkedinURL="https://google.com",User = s, resumePath= "fbabecad-3a29-4a4c-866c-5692c854810f_Wenlin_Li_Resume.pdf", photoPath= "f0550039-4282-4685-9205-edd8915198b0_名片 2022年8月22日-1.jpg" };
+            Application a = new() {Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, numberOfHour = 10 ,SemestersCount = 10, PersonalStatement = "hello" ,TransferSchool = "SLCC",LinkedinURL="https://google.com",User = s, resumePath= "fbabecad-3a29-4a4c-866c-5692c854810f_Wenlin_Li_Resume.pdf", photoPath= "f0550039-4282-4685-9205-edd8915198b0_名片 2022年8月22日-1.jpg" };
             Add(a);
 
             Application a1 = new() { Pursuing = Pursuing.MS, GPA = 4, Department = "CS", avaiableBefore = true, numberOfHour = 10, SemestersCount = 10, User = s1 };
@@ -152,5 +152,6 @@ namespace TAApplication.Data
         public DbSet<TAApplication.Models.Application> Application { 
             get; set; }
         public DbSet<TAApplication.Models.Course> Course { get; set; }
+        public DbSet<TAApplication.Models.Slot> Slot { get; set; }
     }
 }

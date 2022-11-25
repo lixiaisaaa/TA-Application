@@ -17,7 +17,7 @@ namespace TAApplication.Models
         public string? Section { get; set; }
         [Display(Prompt = "i.e., the course catalog description")]
         public string? Description { get; set; }
-        public int profID { get; set; }
+        public string? profID { get; set; }
         public string? profName { get; set; }
         [Display(Prompt = "e.g., M/W 3:30-5:00")]
         public string? TimeAndDays { get; set; }
