@@ -113,6 +113,517 @@
                 square.on('mouseover', pointer_over);
                 square.on('mouseup', pointer_up);
                 app.stage.addChild(square);
+                if(j == 0){
+                var time = "Monday ";
+                    if (i / 4 <= 1) {
+                        if (i == 0) {
+                            time = time + "8:0" + (15 * (i)).toString() + "am";
+                        } else if (i == 4) {
+                            time = time + "9:00" + "am";
+                        }
+                        else {
+                            time = time + "8:" + (15 * i).toString() + " am";
+                        }
+                    }
+                    else if (i / 4 <= 2 && i / 4 > 1) {
+                        if (i / 4 == 2) {
+                            time = time + "10:00" + "am";
+                        } else {
+                            time = time + "9:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 3 && i / 4 > 2) {
+                        if (i / 4 == 3) {
+                            time = time + "11:00" + "am";
+                        } else {
+                            time = time + "10:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 4 && i / 4 > 3) {
+                        if (i / 4 == 4) {
+                            time = time + "12:00" + "pm";
+                        }
+                        else {
+                            time = time + "11:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 5 && i / 4 > 4) {
+                        if (i / 4 == 5) {
+                            time = time + "1:00" + "pm";
+                        }
+                        else {
+                            time = time + "12:" + (15 * (i % 4)).toString() + "pm";
+                        }
+
+                    }
+                    else if (i / 4 <= 6 && i / 4 > 5) {
+                        if (i / 4 == 6) {
+                            time = time + "2:00" + "pm";
+                        }
+                        else {
+                            time = time + "1:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 7 && i / 4 > 6) {
+                        if (i / 4 == 7) {
+                            time = time + "3:00" + "pm";
+                        }
+                        else {
+                            time = time + "2:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 8 && i / 4 > 7) {
+                        if (i / 4 == 8) {
+                            time = time + "4:00" + "pm";
+                        }
+                        else {
+                            time = time + "3:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 9 && i / 4 > 8) {
+                        if (i / 4 == 9) {
+                            time = time + "5:00" + "pm";
+                        }
+                        else {
+                            time = time + "4:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 10 && i / 4 > 9) {
+                        if (i / 4 == 10) {
+                            time = time + "6:00" + "pm";
+                        }
+                        else {
+                            time = time + "5:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 11 && i / 4 > 10) {
+                        if (i / 4 == 11) {
+                            time = time + "7:00" + "pm";
+                        }
+                        else {
+                            time = time + "6:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 12 && i / 4 > 11) {
+                        if (i / 4 == 12) {
+                            time = time + "8:00" + "pm";
+                        }
+                        else {
+                            time = time + "7:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    square.schedule = time;
+                }
+                else if (j == 1) {
+                    var time = "Tuesday ";
+
+                    if (i / 4 <= 1) {
+                        if (i == 0) {
+                            time = time + "8:0" + (15 * (i)).toString() + "am";
+                        } else if (i == 4) {
+                            time = time + "9:00" + "am";
+                        }
+                        else {
+                            time = time + "8:" + (15 * i).toString() + " am";
+                        }
+                    }
+                    else if (i / 4 <= 2 && i / 4 > 1) {
+                        if (i / 4 == 2) {
+                            time = time + "10:00" + "am";
+                        }else{
+                             time = time + "9:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 3 && i / 4 > 2) {
+                        if (i / 4 == 3) {
+                            time = time + "11:00" + "am";
+                        }else{
+                        time = time + "10:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 4 && i / 4 > 3) {
+                        if (i / 4 == 4) {
+                            time = time + "12:00" + "pm";
+                        }
+                        else{
+                        time = time + "11:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 5 && i / 4 > 4) {
+                        if (i / 4 == 5) {
+                            time = time + "1:00" + "pm";
+                        }
+                        else{
+                        time = time + "12:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                        
+                    }
+                    else if (i / 4 <= 6 && i / 4 > 5) {
+                        if (i / 4 == 6) {
+                            time = time + "2:00" + "pm";
+                        }
+                         else{
+                        time = time + "1:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 7 && i / 4 > 6) {
+                        if (i / 4 == 7) {
+                            time = time + "3:00" + "pm";
+                        }
+                         else{
+                        time = time + "2:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 8 && i / 4 > 7) {
+                        if (i / 4 == 8) {
+                            time = time + "4:00" + "pm";
+                        }
+                         else{
+                        time = time + "3:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 9 && i / 4 > 8) {
+                        if (i / 4 == 9) {
+                            time = time + "5:00" + "pm";
+                        }
+                         else{
+                        time = time + "4:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 10 && i / 4 > 9) {
+                        if (i / 4 == 10) {
+                            time = time + "6:00" + "pm";
+                        }
+                         else{
+                        time = time + "5:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 11 && i / 4 > 10) {
+                        if (i / 4 == 11) {
+                            time = time + "7:00" + "pm";
+                        }
+                        else{
+                        time = time + "6:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 12 && i / 4 > 11) {
+                        if (i / 4 == 12) {
+                            time = time + "8:00" + "pm";
+                        }
+                         else{
+                        time = time + "7:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    square.schedule = time;
+                }
+                else if (j == 2) {
+                    var time = "Wednesday ";
+
+                    if (i / 4 <= 1) {
+                        if (i == 0) {
+                            time = time + "8:0" + (15 * (i)).toString() + "am";
+                        } else if (i == 4) {
+                            time = time + "9:00" + "am";
+                        }
+                        else {
+                            time = time + "8:" + (15 * i).toString() + " am";
+                        }
+                    }
+                    else if (i / 4 <= 2 && i / 4 > 1) {
+                        if (i / 4 == 2) {
+                            time = time + "10:00" + "am";
+                        } else {
+                            time = time + "9:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 3 && i / 4 > 2) {
+                        if (i / 4 == 3) {
+                            time = time + "11:00" + "am";
+                        } else {
+                            time = time + "10:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 4 && i / 4 > 3) {
+                        if (i / 4 == 4) {
+                            time = time + "12:00" + "pm";
+                        }
+                        else {
+                            time = time + "11:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 5 && i / 4 > 4) {
+                        if (i / 4 == 5) {
+                            time = time + "1:00" + "pm";
+                        }
+                        else {
+                            time = time + "12:" + (15 * (i % 4)).toString() + "pm";
+                        }
+
+                    }
+                    else if (i / 4 <= 6 && i / 4 > 5) {
+                        if (i / 4 == 6) {
+                            time = time + "2:00" + "pm";
+                        }
+                        else {
+                            time = time + "1:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 7 && i / 4 > 6) {
+                        if (i / 4 == 7) {
+                            time = time + "3:00" + "pm";
+                        }
+                        else {
+                            time = time + "2:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 8 && i / 4 > 7) {
+                        if (i / 4 == 8) {
+                            time = time + "4:00" + "pm";
+                        }
+                        else {
+                            time = time + "3:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 9 && i / 4 > 8) {
+                        if (i / 4 == 9) {
+                            time = time + "5:00" + "pm";
+                        }
+                        else {
+                            time = time + "4:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 10 && i / 4 > 9) {
+                        if (i / 4 == 10) {
+                            time = time + "6:00" + "pm";
+                        }
+                        else {
+                            time = time + "5:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 11 && i / 4 > 10) {
+                        if (i / 4 == 11) {
+                            time = time + "7:00" + "pm";
+                        }
+                        else {
+                            time = time + "6:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 12 && i / 4 > 11) {
+                        if (i / 4 == 12) {
+                            time = time + "8:00" + "pm";
+                        }
+                        else {
+                            time = time + "7:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    square.schedule = time;
+                }
+
+                else if (j == 3) {
+                    var time = "Thursday ";
+
+                    if (i / 4 <= 1) {
+                        if (i == 0) {
+                            time = time + "8:0" + (15 * (i)).toString() + "am";
+                        } else if (i == 4) {
+                            time = time + "9:00" + "am";
+                        }
+                        else {
+                            time = time + "8:" + (15 * i).toString() + " am";
+                        }
+                    }
+                    else if (i / 4 <= 2 && i / 4 > 1) {
+                        if (i / 4 == 2) {
+                            time = time + "10:00" + "am";
+                        }else{
+                             time = time + "9:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 3 && i / 4 > 2) {
+                        if (i / 4 == 3) {
+                            time = time + "11:00" + "am";
+                        }else{
+                        time = time + "10:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 4 && i / 4 > 3) {
+                        if (i / 4 == 4) {
+                            time = time + "12:00" + "pm";
+                        }
+                        else{
+                        time = time + "11:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 5 && i / 4 > 4) {
+                        if (i / 4 == 5) {
+                            time = time + "1:00" + "pm";
+                        }
+                        else{
+                        time = time + "12:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                        
+                    }
+                    else if (i / 4 <= 6 && i / 4 > 5) {
+                        if (i / 4 == 6) {
+                            time = time + "2:00" + "pm";
+                        }
+                         else{
+                        time = time + "1:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 7 && i / 4 > 6) {
+                        if (i / 4 == 7) {
+                            time = time + "3:00" + "pm";
+                        }
+                         else{
+                        time = time + "2:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 8 && i / 4 > 7) {
+                        if (i / 4 == 8) {
+                            time = time + "4:00" + "pm";
+                        }
+                         else{
+                        time = time + "3:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 9 && i / 4 > 8) {
+                        if (i / 4 == 9) {
+                            time = time + "5:00" + "pm";
+                        }
+                         else{
+                        time = time + "4:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 10 && i / 4 > 9) {
+                        if (i / 4 == 10) {
+                            time = time + "6:00" + "pm";
+                        }
+                         else{
+                        time = time + "5:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 11 && i / 4 > 10) {
+                        if (i / 4 == 11) {
+                            time = time + "7:00" + "pm";
+                        }
+                        else{
+                        time = time + "6:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 12 && i / 4 > 11) {
+                        if (i / 4 == 12) {
+                            time = time + "8:00" + "pm";
+                        }
+                         else{
+                        time = time + "7:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    square.schedule = time;
+                }
+
+                else if(j == 4){
+                var time = "Friday ";
+       
+                                   if (i / 4 <= 1) {
+                        if (i == 0) {
+                            time = time + "8:0" + (15 * (i)).toString() + "am";
+                        } else if (i == 4) {
+                            time = time + "9:00" + "am";
+                        }
+                        else {
+                            time = time + "8:" + (15 * i).toString() + " am";
+                        }
+                    }
+                    else if (i / 4 <= 2 && i / 4 > 1) {
+                        if (i / 4 == 2) {
+                            time = time + "10:00" + "am";
+                        }else{
+                             time = time + "9:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 3 && i / 4 > 2) {
+                        if (i / 4 == 3) {
+                            time = time + "11:00" + "am";
+                        }else{
+                        time = time + "10:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 4 && i / 4 > 3) {
+                        if (i / 4 == 4) {
+                            time = time + "12:00" + "pm";
+                        }
+                        else{
+                        time = time + "11:" + (15 * (i % 4)).toString() + "am";
+                        }
+                    }
+                    else if (i / 4 <= 5 && i / 4 > 4) {
+                        if (i / 4 == 5) {
+                            time = time + "1:00" + "pm";
+                        }
+                        else{
+                        time = time + "12:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                        
+                    }
+                    else if (i / 4 <= 6 && i / 4 > 5) {
+                        if (i / 4 == 6) {
+                            time = time + "2:00" + "pm";
+                        }
+                         else{
+                        time = time + "1:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 7 && i / 4 > 6) {
+                        if (i / 4 == 7) {
+                            time = time + "3:00" + "pm";
+                        }
+                         else{
+                        time = time + "2:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 8 && i / 4 > 7) {
+                        if (i / 4 == 8) {
+                            time = time + "4:00" + "pm";
+                        }
+                         else{
+                        time = time + "3:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 9 && i / 4 > 8) {
+                        if (i / 4 == 9) {
+                            time = time + "5:00" + "pm";
+                        }
+                         else{
+                        time = time + "4:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 10 && i / 4 > 9) {
+                        if (i / 4 == 10) {
+                            time = time + "6:00" + "pm";
+                        }
+                         else{
+                        time = time + "5:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 11 && i / 4 > 10) {
+                        if (i / 4 == 11) {
+                            time = time + "7:00" + "pm";
+                        }
+                        else{
+                        time = time + "6:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    else if (i / 4 <= 12 && i / 4 > 11) {
+                        if (i / 4 == 12) {
+                            time = time + "8:00" + "pm";
+                        }
+                         else{
+                        time = time + "7:" + (15 * (i % 4)).toString() + "pm";
+                        }
+                    }
+                    square.schedule = time;
+                }
             }
         
         }
@@ -133,11 +644,19 @@
 
     function generate_time(){
         for(let i = 0; i <= 4; i++){
+            if (i == 4) {
+                var t = (8 + i).toString() + ":00 pm";
+                var time = new PIXI.Text(t, style);
+                time.x = 712;
+                time.y = 40 + 40 * i;
+                app.stage.addChild(time);
+            }else{
             var t = (8+i).toString() + ":00 am";
             var time = new PIXI.Text(t, style);
             time.x = 712;
             time.y = 40 + 40*i;
             app.stage.addChild(time);
+            }          
         }
         for (let i = 0; i <= 7; i++) {
             var t = (1 + i).toString() + ":00 pm";
@@ -155,17 +674,19 @@
             this.drawRect(0, 0, 110, 10);
             this.color = color;
             globalColor = color;
-            map1.set(this.x,this.y);
+            times.push(this);
+
         } else {
             this.beginFill(rect_color);
             this.drawRect(0, 0, 110, 10);
             this.color = rect_color;
             globalColor = rect_color;
-            if(map1.has(this.x)){
-                map1.delete(this.x);
+            console.log(times.indexOf(this));
+            if (times.indexOf(this) >= 0) {
+                times.splice(times.indexOf(this));
             }
         }
-            mouse_down = true;
+        mouse_down = true;
         changed = true;
         document.getElementById('changes').innerHTML = 'Warning: Data Not Saved';
     }
@@ -181,11 +702,11 @@
                 changed = true;
                 document.getElementById('changes').innerHTML = 'Warning: Data Not Saved';
             if (this.color == rect_color) {
-                if (map1.has(this.x)) {
-                    map1.delete(this.x);
+                if (times.indexOf(this) >= 0) {
+                    times.splice(times.indexOf(this));
                 }
-            }else{
-                map1.set(this.x, this.y);
+            }else if(this.color == color){
+                times.push(this);
             }
         }
     }
@@ -193,14 +714,20 @@
         if (changed){
             document.getElementById('changes').innerHTML = '';
         }
-        const iterator1 = map1.keys();
-        var key = iterator1.next();
-        while (key.value != null) {
-            var value = map1.get(key);
-            times.push([key,value]);
-            key = key.next();
-            console.log(key.value);
+        var postData = [];
+        var schedules = [];
+        for(let i = 0; i < times.length; i++){
+            var time = [times[i].x,times[i].y];
+            postData.push(time);
+            schedules.push(times[i].schedule)
         }
-        console.log(key.value);
+        $.ajax({
+            type: "post",
+            url: "/Slots/SetSchedule",
+            data: JSON.stringify(schedules),
+            success: function (data) {
+              console.log("Success");
+            }
+        });
     }
 </script>

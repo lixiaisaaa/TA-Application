@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
 
@@ -22,8 +24,14 @@ namespace TAApplication.Controllers
         // GET: Slots
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Slot.ToListAsync());
+            return View(await _context.Slot.ToListAsync());
         }
+        [HttpPost]
+        public async Task<ActionResult> SetSchedule(TAUser user, ArrayList array, ArrayList schedule)
+        {
 
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
