@@ -45,6 +45,23 @@
                                 <li class="nav-item">
                                     <a> Wenlin Li and Robert Li</a>
                                 </li>
+                                 @if (User.IsInRole("Admin") || User.IsInRole("Applicant") || User.IsInRole("professor"))  // remember: spelling!
+                                {
+                                    var app = db.Application.Where(o => o.User.Id == um.GetUserId(User)).FirstOrDefault();
+                                    <li class="nav-item">
+                                        <a>PS8</a>
+                                    </li>
+                                   
+                                    @if (!object.ReferenceEquals(null, app))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-controller="Application" asp-action="Details" asp-route-id="@app.ID">Application main page (for Applicant @um.GetUserName(User) ) </a>
+                                        </li>
+                                         <li class="nav-item">
+                                            <a class="dropdown-item" asp-controller="Slots" asp-action="Index">Availability page</a>
+                                        </li>
+                                    }
+                                }
                                 <li class="nav-item">
                                     <a>PS6</a>
                                 </li>

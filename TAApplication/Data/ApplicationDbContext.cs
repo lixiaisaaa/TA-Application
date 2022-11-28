@@ -146,6 +146,9 @@ namespace TAApplication.Data
 
             Course c5 = new() { Semester = "Spring", Year = 2023, CourseNumber = 4400, note = "Need 2 TAs" };
             Add(c5);
+
+            Slot slot = new Slot() {User = s, IsActive = true, time = "Monday 8:00am Monday 8:15 am Monday 8:30 am Monday 8:45 am Monday 9:00am Monday 9:15am Monday 9:30am Monday 9:45am Monday 10:00am Monday 10:15am Monday 10:30am Monday 10:45am Monday 11:00am Monday 11:15am Monday 11:30am Monday 11:45am Friday 8:00am Friday 8:15 am Friday 8:30 am Friday 8:45 am Friday 9:00am Friday 9:15am Friday 9:30am Friday 9:45am Friday 10:00am Friday 10:15am Friday 10:30am Friday 10:45am Friday 11:00am Friday 11:15am Friday 11:30am Friday 11:45am Tuesday 12:00pm Tuesday 12:15pm Tuesday 12:30pm Tuesday 12:45pm Tuesday 1:00pm Tuesday 1:15pm Tuesday 1:30pm Tuesday 1:45pm Tuesday 2:00pm Tuesday 2:15pm Tuesday 2:30pm Tuesday 2:45pm Tuesday 3:00pm Tuesday 3:15pm Tuesday 3:30pm Tuesday 3:45pm Tuesday 4:00pm Tuesday 4:15pm Tuesday 4:30pm Tuesday 4:45pm Thursday 12:00pm Thursday 12:15pm Thursday 12:30pm Thursday 12:45pm Thursday 1:00pm Thursday 1:15pm Thursday 1:30pm Thursday 1:45pm Thursday 2:00pm Thursday 2:15pm Thursday 2:30pm Thursday 2:45pm Thursday 3:00pm Thursday 3:15pm Thursday 3:30pm Thursday 3:45pm Thursday 4:00pm Thursday 4:15pm Thursday 4:30pm Thursday 4:45pm" , timeArray = "50 50#50 60#50 70#50 80#50 90#50 100#50 110#50 120#50 130#50 140#50 150#50 160#50 170#50 180#50 190#50 200#570 50#570 60#570 70#570 80#570 90#570 100#570 110#570 120#570 130#570 140#570 150#570 160#570 170#570 180#570 190#570 200#180 210#180 220#180 230#180 240#180 250#180 260#180 270#180 280#180 290#180 300#180 310#180 320#180 330#180 340#180 350#180 360#180 370#180 380#180 390#180 400#440 210#440 220#440 230#440 240#440 250#440 260#440 270#440 280#440 290#440 300#440 310#440 320#440 330#440 340#440 350#440 360#440 370#440 380#440 390#440 400#"};
+            Add(slot);
             SaveChanges();
 
         }

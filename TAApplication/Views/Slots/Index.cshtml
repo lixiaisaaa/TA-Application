@@ -95,7 +95,6 @@
     app.stage.addChild(NotAvailable);
     app.stage.addChild(square2);
     build_square();
-    line();
     generate_time();
     var squares = [];
     var slots = {
@@ -125,10 +124,10 @@
                 app.stage.addChild(square);
                 scheduleList += data[i][0] +" "+ data[i][1] + "#";
             }
+            console.log(data);
         }
-    });
-    console.log(scheduleList);
-
+    });   
+    line();
 
     function build_square() {
         for(let j = 0; j < 5; j++){
@@ -720,9 +719,11 @@
         mouse_down = true;
         changed = true;
         document.getElementById('changes').innerHTML = 'Warning: Data Not Saved';
+        line();
     }
     function pointer_up() {
         mouse_down = false;
+        line();
     }
 
     function pointer_over() {
@@ -740,6 +741,7 @@
                 times.push(this);
             }
         }
+        line();
     }
     function save(){
         if (changed){
@@ -770,5 +772,6 @@
               console.log("Success");
             }
         });
+        console.log(s);
     }
 </script>

@@ -15,11 +15,18 @@
 
   This html file is the Home page that shows the detail.
 -->
-
+@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.AspNetCore.Identity
+@inject ApplicationDbContext db
+@inject UserManager<TAUser> um
 @model TAApplication.Models.Application
 
 @{
     ViewData["Title"] = "Details";
+    TAUser user = await um.GetUserAsync(User);
+    Slot s = db.Slot.FirstOrDefault(o => o.User == user);
+
 }
 
 <h1>Details</h1>
@@ -79,9 +86,20 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.LinkedinURL)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LinkedinURL)
         </dd>
+        <div>
+            <dd class="bold" style="font-weight: bold">
+                Available time:
+            </dd>
+            <dd class="col-sm-10">
+                @s.time
+            </dd>
+            <dd class="col-sm-10">
+                <a  asp-controller="Slots" asp-action="Index">link to Availability page</a>
+            </dd>
+        </div>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.resumePath)
         </dt>
@@ -94,6 +112,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.photoPath)
         </dd>
+
     </dl>
 </div>
 <div><a href="/uploads/@Model.resumePath">Download PDF</a></div>
