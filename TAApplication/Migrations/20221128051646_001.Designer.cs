@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAApplication.Data;
 
@@ -11,9 +12,10 @@ using TAApplication.Data;
 namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128051646_001")]
+    partial class _001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -355,6 +357,30 @@ namespace TAApplication.Migrations
                     b.ToTable("Course");
                 });
 
+            modelBuilder.Entity("TAApplication.Models.position", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int?>("SlotID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("x")
+                        .HasColumnType("int");
+
+                    b.Property<int>("y")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SlotID");
+
+                    b.ToTable("position");
+                });
+
             modelBuilder.Entity("TAApplication.Models.Slot", b =>
                 {
                     b.Property<int>("ID")
@@ -370,9 +396,6 @@ namespace TAApplication.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("time")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("timeArray")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -442,6 +465,13 @@ namespace TAApplication.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TAApplication.Models.position", b =>
+                {
+                    b.HasOne("TAApplication.Models.Slot", null)
+                        .WithMany("timeArray")
+                        .HasForeignKey("SlotID");
+                });
+
             modelBuilder.Entity("TAApplication.Models.Slot", b =>
                 {
                     b.HasOne("TAApplication.Areas.Data.TAUser", "User")
@@ -449,6 +479,11 @@ namespace TAApplication.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TAApplication.Models.Slot", b =>
+                {
+                    b.Navigation("timeArray");
                 });
 #pragma warning restore 612, 618
         }

@@ -98,6 +98,37 @@
     line();
     generate_time();
     var squares = [];
+    var slots = {
+         Unid : "@user.Unid"
+        }
+    var scheduleList = "";
+    $.ajax({
+        type: "post",
+        url: "/Slots/GetSchedule",
+        data: slots,
+        content: "application/json;",
+        dataType: "json",
+        success: function (data) {
+            for(let i = 0; i < data.length; i++){
+                var square = new PIXI.Graphics();
+                square.beginFill(color);
+                square.drawRect(0, 0, 110, 10);
+                square.x = data[i][0];
+                square.y = data[i][1];
+                square.interactive = true;
+                square.color = color;
+                square.on('mousedown', pointer_down);
+                square.on('mouseover', pointer_over);
+                square.on('mouseup', pointer_up);
+                console.log(data[i][0]);
+                console.log(data[i][1]);
+                app.stage.addChild(square);
+                scheduleList += data[i][0] +" "+ data[i][1] + "#";
+            }
+        }
+    });
+    console.log(scheduleList);
+
 
     function build_square() {
         for(let j = 0; j < 5; j++){
@@ -714,17 +745,27 @@
         if (changed){
             document.getElementById('changes').innerHTML = '';
         }
-        var postData = [];
+        var postData = scheduleList;
         var schedules = [];
+        var s = "";
         for(let i = 0; i < times.length; i++){
-            var time = [times[i].x,times[i].y];
-            postData.push(time);
+            postData += times[i].x + " " + times[i].y + "#";
             schedules.push(times[i].schedule)
+            s += times[i].schedule + " "; 
+        }
+        let unid = "@user.Unid";
+        var slots = {
+                Unid : unid,
+                time : s,
+                IsActive : true,
+                timeArray: postData
         }
         $.ajax({
             type: "post",
             url: "/Slots/SetSchedule",
-            data: JSON.stringify(schedules),
+            data: slots,
+            content: "application/json;",
+            dataType: "json",
             success: function (data) {
               console.log("Success");
             }
