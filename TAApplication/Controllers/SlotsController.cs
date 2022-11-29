@@ -56,6 +56,7 @@ namespace TAApplication.Controllers
         public async Task<ActionResult> GetSchedule(Sample sample) {
             Slot? slot = await _context.Slot.FirstOrDefaultAsync(o => o.User.Unid == sample.Unid);
             List<int[]>? timeArray = new List<int[]>();
+            sendBackData data = new sendBackData();
             if (slot is not null)
             {
                 if (slot.timeArray is not null)
@@ -73,10 +74,13 @@ namespace TAApplication.Controllers
                             timeArray.Add(array);
                         }
                     }
+                    data.timeArray = timeArray;
+                }
+                if (slot.time is not null) {
+                    data.time = slot.time;
                 }
             }
-           
-            return Json(timeArray);
+            return Json(data);
         }
     }
     public class Sample
@@ -87,5 +91,10 @@ namespace TAApplication.Controllers
         public string? timeArray { get; set; }
     }
 
+    public class sendBackData
+    {
+        public string? time { get; set; }
+        public List<int[]>? timeArray { get; set; }
+    }
 
 }
