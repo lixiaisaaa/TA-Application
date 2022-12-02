@@ -156,5 +156,6 @@ namespace TAApplication.Data
             get; set; }
         public DbSet<TAApplication.Models.Course> Course { get; set; }
         public DbSet<TAApplication.Models.Slot> Slot { get; set; }
+        public DbSet<TAApplication.Models.Enrollment> Enrollment { get; set; }
     }
 }
