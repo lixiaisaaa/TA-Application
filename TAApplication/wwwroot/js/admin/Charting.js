@@ -71,3 +71,16 @@
         }, 1.6, 3.3, 5.9, 10.5, 13.5, 14.5, 14.4, 11.5, 8.7, 4.7, 2.6]
     }]
 });
+
+$(function () {
+    $("#datepicker1").datepicker({ minDate: "11/15/2022", maxDate: 'today' });
+    $("#datepicker1").on("change", function () {
+        var selected = $(this).val();
+
+    });
+    $("#datepicker2").datepicker({ minDate: "11/15/2022", maxDate: 'today' });
+    $("#datepicker2").on("change", function () {
+        var selected = $(this).val();
+
+    });
+});
