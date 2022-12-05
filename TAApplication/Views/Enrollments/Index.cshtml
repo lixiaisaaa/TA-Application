@@ -1,0 +1,61 @@
+﻿@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.AspNetCore.Identity
+
+
+@inject ApplicationDbContext db
+@inject UserManager<TAUser> um
+@model IEnumerable<TAApplication.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Index";
+    LinkedList<string> course = new LinkedList<string>();
+}
+@section Scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.2/highcharts.js" integrity="sha512-JVzXlL1mZb/G0YNUJtPqUzA/QtPMQLNpCtEBOV9R8P3Uskp4W0C+6SVZ3rpwnKcp/V/59YQoGNUYmB/N6do1sA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.2/css/highcharts.min.css" integrity="sha512-EdQYgIlsKc4GejWW6mB4JgQPrsvuwR+365Zr86uNx4sd+9vFxyhJxPzEV7axYLTULBdmdR4jGsK20MmkJoTHHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="~/js/admin/Charting.js"></script>
+    <link rel="stylesheet" href="~/css/site.css">
+}
+
+<div>
+        <button type="button" class="btn btn-primary" onclick="darkMode()">Dark Mode</button>
+</div>
+<hr>
+    <div>
+
+        <label for="courses">Choose a course:</label>
+
+        <select name="courses" id="courses" onChange="myNewFunction(this);">
+        @foreach (var item in Model)
+        {
+            if (!course.Contains(item.Course)) {
+                course.AddFirst(item.Course);
+                <option value="course">@Html.DisplayFor(modelItem => item.Course)</option>
+            }
+        }
+    </select>
+
+    Start Date: <input type="text" id="datepicker1">
+
+    End Date: <input type="text" id="datepicker2">
+
+
+</div>
+<div>
+    <button type="button" class="btn btn-primary" onclick="getData()" id= "button1">Get Data</button>
+</div>
+<hr>
+<div>
+    <figure class="highcharts-figure">
+        <div id="container">
+        </div>
+        <div class="loader" style="display : none"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
+</div>
+

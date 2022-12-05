@@ -208,14 +208,14 @@ namespace TAApplication.Data
                         date = textFieldParser.ReadFields();
                     }
                     else {
-                            string[] rows = textFieldParser.ReadFields();
-                        if (rows is not null && date is not null ) {
-                            string department = rows[0].Substring(0, 2);
-                            string courseNumber = rows[0].Substring(3, 4);
-                            for (int i = 1; i < rows.Length; i++){
-                                Enrollment e = new Enrollment() { Course = new Course() { Department = department, CourseNumber = Int32.Parse(courseNumber) }, Date = date[i], enrollment = Int32.Parse(rows[i]) };
+                        string[] rows = textFieldParser.ReadFields();
+                        if (rows is not null && date is not null)
+                        {
+                            string course = rows[0];
+                            for (int i = 1; i < rows.Length; i++)
+                            {
+                                Enrollment e = new Enrollment() { Course = course, Date = date[i], enrollment = Int32.Parse(rows[i]) };
                                 Add(e);
-                                SaveChanges();
                             }
                         }
                     }
