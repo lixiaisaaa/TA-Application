@@ -177,10 +177,14 @@ namespace TAApplication.Data
                         string[] rows = textFieldParser.ReadFields();
                         if (rows is not null && date is not null)
                         {
-                            string course = rows[0];
+                            string[] course = rows[0].Split(" ");
                             for (int i = 1; i < rows.Length; i++)
                             {
-                                Enrollment e = new Enrollment(){ Course = course, Date = date[i], enrollment = Int32.Parse(rows[i]) };
+                                string dept = course[0];
+                                string courseNumber = course[1];
+                                Course c = new() { Department = dept, CourseNumber = Int32.Parse(courseNumber) };
+                                Enrollment e = new Enrollment(){ Course = c, Date = date[i], enrollment = Int32.Parse(rows[i]), CourseStr = dept + " " + courseNumber };
+                                Add(c);
                                 Add(e);
                             }
                         }
@@ -192,38 +196,6 @@ namespace TAApplication.Data
             SaveChanges();
 
         }
-
-        public async Task addEnrollments() {
-            string Banner1ImagePath = Path.Combine(_environment.ContentRootPath, @"wwwroot\temp.csv");
-            using (TextFieldParser textFieldParser = new TextFieldParser(Banner1ImagePath))
-            {
-                textFieldParser.TextFieldType = FieldType.Delimited;
-                textFieldParser.SetDelimiters(",");
-                int index = 0;
-                string[] date = null;
-                while (!textFieldParser.EndOfData)
-                {
-                    if (index == 0)
-                    {
-                        date = textFieldParser.ReadFields();
-                    }
-                    else {
-                        string[] rows = textFieldParser.ReadFields();
-                        if (rows is not null && date is not null)
-                        {
-                            string course = rows[0];
-                            for (int i = 1; i < rows.Length; i++)
-                            {
-                                Enrollment e = new Enrollment() { Course = course, Date = date[i], enrollment = Int32.Parse(rows[i]) };
-                                Add(e);
-                            }
-                        }
-                    }
-                    index++;
-                }
-            }
-        }
-
 
         public DbSet<TAApplication.Models.Application> Application { 
             get; set; }

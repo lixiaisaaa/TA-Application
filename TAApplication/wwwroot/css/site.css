@@ -34,6 +34,11 @@ body {
     color: white;
 }
 
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
     0% {

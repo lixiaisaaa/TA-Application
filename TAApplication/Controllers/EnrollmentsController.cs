@@ -20,20 +20,15 @@ namespace TAApplication.Controllers
             _context = context;
         }
 
-        // GET: Enrollments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> EnrollmentTrend()
         {
             return View(await _context.Enrollment.ToListAsync());
         }
 
-        public async Task<IActionResult> EnrollmentTrends()
-        {
-            return View(await _context.Enrollment.ToListAsync());
-        }
         [HttpPost]
         public async Task<ActionResult> GetEnrollmentData(string startDate, string endDate, string dept, string courseNumber)
         {
-            string course = dept + " " + courseNumber;
+            Course? c = await _context.Course.FirstOrDefaultAsync(o => o.Department == dept && o.CourseNumber == Int32.Parse(courseNumber));
             string[] s = startDate.Split("/");
             string queryStartDate = "";
             int dateNumber = Int32.Parse(s[1]);          
@@ -53,7 +48,8 @@ namespace TAApplication.Controllers
             for (int i = 0; i <= dateNumber2 - dateNumber; i++) {
                 int dateNum = dateNumber + i;
                 string queryDate = queryStartDate + " " + dateNum.ToString();
-                Enrollment? e = await _context.Enrollment.FirstOrDefaultAsync(o => o.Date == queryDate && o.Course == course);
+
+                Enrollment? e = await _context.Enrollment.FirstOrDefaultAsync(o => o.Date == queryDate && o.CourseStr == dept + " " + courseNumber);
                 if (e is not null)
                 {
                     if (e.Date is not null)

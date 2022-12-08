@@ -32,9 +32,9 @@
         <select name="courses" id="courses" onChange="myNewFunction(this);">
         @foreach (var item in Model)
         {
-            if (!course.Contains(item.Course)) {
-                course.AddFirst(item.Course);
-                <option value="course">@Html.DisplayFor(modelItem => item.Course)</option>
+            if (!course.Contains(item.CourseStr)) {
+                course.AddFirst(item.CourseStr);
+                <option value="course">@Html.DisplayFor(modelItem => item.CourseStr)</option>
             }
         }
     </select>

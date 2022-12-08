@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TAApplication.Data;
 
@@ -11,9 +12,10 @@ using TAApplication.Data;
 namespace TAApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208173852_004")]
+    partial class _004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,9 +367,6 @@ namespace TAApplication.Migrations
 
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CourseStr")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Date")
                         .HasColumnType("nvarchar(max)");

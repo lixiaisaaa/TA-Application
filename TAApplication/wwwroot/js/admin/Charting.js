@@ -15,7 +15,7 @@ $(function () {
         startDate = $(this).val();
         var d1 = $('#datepicker1').datepicker('getDate');
         date1 = d1.getMonth() + "/" + d1.getDate();
-        
+
     });
     $("#datepicker2").datepicker({ minDate: "11/15/2022", maxDate: 'today' });
     $("#datepicker2").on("change", function () {
@@ -148,4 +148,3 @@ function darkMode() {
     var element = document.body;
     element.classList.toggle("dark-mode");
 }
-

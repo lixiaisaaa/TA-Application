@@ -43,7 +43,13 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li class="nav-item">
-                                    <a> Wenlin Li and Robert Li</a>
+                                    <a> Wenlin Li and Robert Li</a>                   
+                                </li>
+                                <li class="nav-item">
+                                    <a>PS9</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-controller="Enrollments" asp-action="EnrollmentTrend">Enrollment Trend</a>
                                 </li>
                                  @if (User.IsInRole("Admin") || User.IsInRole("Applicant") || User.IsInRole("professor"))  // remember: spelling!
                                 {
