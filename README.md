@@ -1,8 +1,8 @@
-# # PS5- MVC for TA Applications
+# # PS9 - Charting
 ```
 Author:     Xia Li
 Partner:    Wenlin Li
-Date:       10/17/2022
+Date:       12/09/2022
 Course:     CS 4540, University of Utah, School of Computing
 GitHub ID:  Robert Li
 Repo:       https://github.com/uofu-cs4540-fall2022/taapplication-doubleli-2-0
@@ -15,7 +15,7 @@ WebSite URL WenLin Li: https://ec2-54-236-246-111.compute-1.amazonaws.com
 # Overview of the TA Application Functionality 
 
 The TA Application program is currently capable of showing uses 3 different roles with default assigned. The authentication and authorization are 
-implemented, implement basic Email confirmation using SendGrid, Update Navbar is to show the user's role. Added up the file upload function, the Modification and Creation Date is handled. We have created different roles for viewing applications. 
+implemented, implement basic Email confirmation using SendGrid, Update Navbar is to show the user's role. Added up the file upload function, the Modification and Creation Date is handled. We have created different roles for viewing applications. We added chart for TA to select availiable time.
 
 # Comments to Evaluators:
 
@@ -25,15 +25,27 @@ UI/UX choices - We have created a different page for review, and made the applic
 
 # Assignment-Specific Topics
 
-Modification and Creation Date Handling.
-Updated the DB.
-The Application Views (and CRUD).
-The Database Context and Seeding.
+Create an "enrollment over time" model which associates courses (Course) with enrollments (int)
+Update the Admin Controller to have two endpoints: EnrollmentTrends and GetEnrollmentData
+Create a View that allows the admin to indicate a start and end date and a course and to receive the enrollment data over that period
+Use HighCharts to display this information in an informative manner
 
-Above and Beyond paragraph - describe what you did that is more involved than the basic requirements for the assignment.  If you followed external tutorials/advice, make sure you cite your sources.
-N/A
-Improvements paragraph - If you have done any other work to improve your application over previous assignments, describe them here.  If not, type: -na-
-N/A
+Above and Beyond paragraph 
+Use another type of highchart (e.g., piechart) to show the current enrollments of the queried classes.  This can be either on the same page or through another Controller endpoint and View.
+We have implemented dark mode.
+
+
+Deploy system to AWS
+Wenlin Li: https://ec2-18-208-245-224.compute-1.amazonaws.com/
+Xia Li:https://ec2-52-4-254-22.compute-1.amazonaws.com
+
+
+Utilize a "Dark Mode" for the given view.  In your README explain what you did. (Optionally, added a toggle to swap between dark and light modes interactively!)
+Add some html setion for changing between dark and light modes from W3school.
+
+Use one of highchart's fancy charting options (you should ask the professor in class for permission if you choose this strategy).  You might have to "make up a reason" (or data) to make this work.
+We have implemented dark mode.
+
 
 # Consulted Peers:
 
@@ -59,8 +71,9 @@ bootstrap icons: https://icons.getbootstrap.com/
 
     1. Microsoft.com
     2. stackoverflow.com
+    3.https://www.w3schools.com/
     
 
 # Time Expenditures:
 
-  1. Assignment two: Predicted Hours: 8 Actual Hours: 25
+  1. Assignment two: Predicted Hours: 8 Actual Hours: 12
