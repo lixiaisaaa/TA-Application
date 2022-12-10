@@ -31,21 +31,13 @@ Create a View that allows the admin to indicate a start and end date and a cours
 Use HighCharts to display this information in an informative manner
 
 Above and Beyond paragraph 
-Use another type of highchart (e.g., piechart) to show the current enrollments of the queried classes.  This can be either on the same page or through another Controller endpoint and View.
-We have implemented dark mode.
-
 
 Deploy system to AWS
 Wenlin Li: https://ec2-18-208-245-224.compute-1.amazonaws.com/
 Xia Li:https://ec2-52-4-254-22.compute-1.amazonaws.com
 
-
 Utilize a "Dark Mode" for the given view.  In your README explain what you did. (Optionally, added a toggle to swap between dark and light modes interactively!)
 Add some html setion for changing between dark and light modes from W3school.
-
-Use one of highchart's fancy charting options (you should ask the professor in class for permission if you choose this strategy).  You might have to "make up a reason" (or data) to make this work.
-We have implemented dark mode.
-
 
 # Consulted Peers:
 
